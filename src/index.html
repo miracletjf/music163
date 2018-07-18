@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
 </head>
+
 <body>
-  
+  <script>
+    var APP_ID = 'jRN9JhdqWuK4r3erDEhKdNTQ-gzGzoHsz';
+    var APP_KEY = 'lunhlwENtze4RjE2MxHzWYMP';
+    
+    AV.init({
+      appId: APP_ID,
+      appKey: APP_KEY
+    });
+    
+    console.log(AV);
+  </script>
 </body>
+
 </html>
