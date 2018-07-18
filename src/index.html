@@ -13,13 +13,21 @@
   <script>
     var APP_ID = 'jRN9JhdqWuK4r3erDEhKdNTQ-gzGzoHsz';
     var APP_KEY = 'lunhlwENtze4RjE2MxHzWYMP';
-    
+
     AV.init({
       appId: APP_ID,
       appKey: APP_KEY
     });
-    
-    console.log(AV);
+
+    var TestObject = AV.Object.extend('TestObject');
+    var testObject = new TestObject();
+    testObject.save({
+      name: 'test',
+      author: 'test',
+      url: 'test'
+    }).then(function (object) {
+      console.log(object);
+    })
   </script>
 </body>
 
