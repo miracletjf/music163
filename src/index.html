@@ -10,16 +10,24 @@
   <script src="../node_modules/plupload/js/moxie.min.js"></script>
   <script src="../vendors/plupload.min.js"></script>
   <script src="../vendors/qiniu.min.js"></script>
-
+  <style>
+    .upload-box {
+      padding: 10px;
+      display: block;
+      border: dashed 2px #aaa;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
 
-  <audio src="http://pc5zw9rcj.bkt.clouddn.com/Steerner,Martelli%20-%20Sky%20%28Radio%20Edit%29.mp3">fasdfasdf</audio>
+  <audio src="http://pc5zw9rcj.bkt.clouddn.com/Steerner,Martelli%20-%20Sky%20%28Radio%20Edit%29.mp3" controls="controls">不支持</audio>
 
 
   <div class="upload-box" id="uploadBox">
     <button id="uploadBtn">上传</button>
   </div>
+  <div id="tip"></div>
 
   <script>
     var APP_ID = 'jRN9JhdqWuK4r3erDEhKdNTQ-gzGzoHsz';
