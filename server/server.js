@@ -27,19 +27,24 @@ let server = http.createServer(function(request,response){
   if(pathNoQuery === '/uptoken'){
     let string = fs.readFileSync('./server/qiniu-key.json','utf-8');
     let {accessKey,secretKey} = JSON.parse(string);
+    let bucket = 'music163'
     console.log(accessKey,secretKey);
     let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
-
-    var options = {
+    let options = {
       scope: bucket,
     };
-    var putPolicy = new qiniu.rs.PutPolicy(options);
-    var uploadToken=putPolicy.uploadToken(mac);
+    let putPolicy = new qiniu.rs.PutPolicy(options);
+    let uploadToken=putPolicy.uploadToken(mac);
+
+    let resStringJSON  = {
+      uptoken: uploadToken
+    }
+    
 
     response.setHeader('Content-Type','text/html;charset=utf-8');
     response.setHeader('Access-Control-Allow-Origin','*');
-    response.write(string);
+    response.write(JSON.stringify(resStringJSON));
     response.end();
   }
 }) 
