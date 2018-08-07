@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>admin</title>
   <script src="../vendors/av.min.js"></script>
   <script src="../node_modules/plupload/js/moxie.min.js"></script>
   <script src="../vendors/plupload.min.js"></script>
@@ -20,10 +20,47 @@
   </style>
 </head>
 <body>
-
-  <audio src="http://pc5zw9rcj.bkt.clouddn.com/Steerner,Martelli%20-%20Sky%20%28Radio%20Edit%29.mp3" controls="controls">不支持</audio>
-
-
+  <div class="page">
+    <aside>
+      <div class="new-song"></div>
+      <ul class="song-list">
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div class="upload-song">
+        <div class="upload-box" id="uploadBox">
+          <button id="uploadBtn">上传</button>
+        </div>
+        <div id="tip"></div>
+      </div>
+    </aside>
+    <main>
+      <form action="">
+        <div class="row-box">
+          <label for="">
+            <span>歌名</span>
+            <input type="text">
+          </label>
+        </div>
+        <div class="row-box">
+          <label for="">
+            <span>歌手</span>
+            <input type="text">
+          </label>
+        </div>
+        <div class="row-box">
+          <label for="">
+            <span>歌曲外链</span>
+            <input type="text">
+          </label>
+        </div>
+        <div class="row-box">
+          <button>确认</button>
+        </div>
+      </form>
+    </main>
+  </div>
   <div class="upload-box" id="uploadBox">
     <button id="uploadBtn">上传</button>
   </div>

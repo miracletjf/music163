@@ -64,7 +64,7 @@ var uploader = Qiniu.uploader({
       var domain = up.getOption('domain');
       console.log(info);
       var res = JSON.parse(info.response);
-      var sourceLink = 'http://'+domain + '/' + res.key; //获取上传成功后的文件的Url
+      var sourceLink = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
       console.log(sourceLink);
     },
     'Error': function (up, err, errTip) {
