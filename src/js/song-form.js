@@ -9,19 +9,19 @@
       <div class="row-box">
         <label>
           <span class="name">歌 名</span>
-          <input type="text" class="ipt">
+          <input type="text" class="ipt" value="--key--">
         </label>
       </div>
       <div class="row-box">
         <label>
           <span class="name">歌 手</span>
-          <input type="text" class="ipt">
+          <input type="text" class="ipt" value="">
         </label>
       </div>
       <div class="row-box">
         <label>
           <span class="name">歌曲外链</span>
-          <input type="text" class="ipt">
+          <input type="text" class="ipt" value="--link--">
         </label>
       </div>
       <div class="row-box">
@@ -31,8 +31,13 @@
       </div>
     </form>
     `,
-    render(data){
-      $(this.el).html(this.template);
+    render(data = {}){
+      var placeholders = ['key','link'];
+      var html = this.template;
+      placeholders.map(item=>{
+        html = html.replace(`--${item}--`,data[item] || '');
+      })
+      $(this.el).html(html);
     }
   }
 
@@ -43,6 +48,10 @@
       this.view = view;
       this.model = model;
       this.view.render();
+      window.eventHub.on('upload',data=>{
+        console.log(data);
+        this.view.render(data);
+      })
     }
   }
 

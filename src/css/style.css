@@ -27,6 +27,9 @@ button {
   border-bottom: solid 1px #aaa;
   cursor: pointer;
 }
+.new-song.actieve {
+  background: #999;
+}
 .songList-container {
   flex-grow: 1;
 }

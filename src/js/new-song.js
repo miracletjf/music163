@@ -14,6 +14,9 @@
       this.view = view;
       this.model = model;
       this.view.render();
+      window.eventHub.on('upload',data=>{
+        $(this.view.el).addClass('actieve');
+      })
     }
   }
 
