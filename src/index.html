@@ -23,19 +23,8 @@
 <body>
   <div class="page">
     <aside>
-      <div class="new-song">新建歌曲</div>
-      <ul class="song-list">
-        <li>歌曲1</li>
-        <li>歌曲2</li>
-        <li>歌曲3</li>
-        <li>歌曲4</li>
-        <li>歌曲5</li>
-        <li>歌曲6</li>
-        <li>歌曲7</li>
-        <li>歌曲8</li>
-        <li>歌曲9</li>
-        <li>歌曲10</li>
-      </ul>
+      <div class="new-song"></div>
+      <div class="songList-container"></div>
       <div class="upload-song">
         <div class="upload-box" id="uploadBox">
           点击<button id="uploadBtn">上传</button><br>
@@ -43,42 +32,8 @@
         </div>
       </div>
     </aside>
-    <main>
-      <form action="">
-        <div class="text-title">
-          新建歌曲
-        </div>
-        <div class="row-box">
-          <label>
-            <span class="name">歌 名</span>
-            <input type="text" class="ipt">
-          </label>
-        </div>
-        <div class="row-box">
-          <label>
-            <span class="name">歌 手</span>
-            <input type="text" class="ipt">
-          </label>
-        </div>
-        <div class="row-box">
-          <label>
-            <span class="name">歌曲外链</span>
-            <input type="text" class="ipt">
-          </label>
-        </div>
-        <div class="row-box">
-          <div class="btn-box">
-            <button>确认</button>
-          </div>
-        </div>
-      </form>
-    </main>
+    <main id="song_form"> </main>
   </div>
-  <!-- <div class="upload-box" id="uploadBox">
-    <button id="uploadBtn">上传</button>
-  </div>
-  <div id="tip"></div> -->
-
   <script>
     var APP_ID = 'jRN9JhdqWuK4r3erDEhKdNTQ-gzGzoHsz';
     var APP_KEY = 'lunhlwENtze4RjE2MxHzWYMP';
@@ -99,7 +54,15 @@
     })
   </script>
 
-  <script src="qiniuDemo.js"></script>
+  <script src="../vendors/jquery.min.js"></script>
+
+
+  <script src="js/song-form.js"></script>
+  <script src="js/song-list.js"></script>
+  <script src="js/new-song.js"></script>
+  <script src="js/upload-song.js"></script>
+
+  <!-- <script src="qiniuDemo.js"></script> -->
 </body>
 
 </html>

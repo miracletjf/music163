@@ -27,10 +27,11 @@ button {
   border-bottom: solid 1px #aaa;
   cursor: pointer;
 }
-.song-list {
+.songList-container {
   flex-grow: 1;
 }
-.song-list li {
+.songList { }
+.songList li {
   display: block;
   font-size: 15px;
   line-height: 34px;
@@ -39,7 +40,7 @@ button {
   box-shadow: 0 1px 0 #eee;
   cursor: pointer;
 }
-.song-list li:hover {
+.songList li:hover {
   background: #999;
   color: #fff;
 }
@@ -91,10 +92,11 @@ main .row-box .ipt {
 }
 main .row-box .btn-box {
   margin-left: 70px;
-}
-main .row-box button {
   margin-top: 10px;
+}
+main .btn-box button {
   padding: 0 16px;
+  margin-right: 10px;
   line-height: 30px;
   font-size: 15px;
   border: solid 1px #ddd;
