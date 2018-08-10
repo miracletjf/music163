@@ -25,7 +25,7 @@
         </label>
       </div>
       <div class="row-box">
-        <div class="btn-box">
+        <div class="btn-box"> 
           <button>确认</button>
         </div>
       </div>
@@ -41,16 +41,30 @@
     }
   }
 
-  let model = {}
+  let model = {
+    data: {
+
+    },
+    create(){
+
+    }
+  }
 
   let controller = {
     init(view,model){
       this.view = view;
       this.model = model;
       this.view.render();
-      window.eventHub.on('upload',data=>{
-        console.log(data);
+      window.eventHub.on('upload',data => {
+        //去除文件名后缀
+        data.key = data.key.replace(/\.mp3/,'');
         this.view.render(data);
+      })
+    },
+    bindEvents(){
+      $(this.view.el).on('submit','form',function(e){
+        e.preventDefault();
+        
       })
     }
   }

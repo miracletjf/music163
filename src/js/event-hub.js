@@ -11,6 +11,6 @@ window.eventHub = {
     if(this.events[eventName] === undefined){
       this.events[eventName] = [];
     }
-      this.events[eventName].push(fn);
+    this.events[eventName].push(fn);
   }
 }

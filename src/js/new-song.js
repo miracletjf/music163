@@ -17,6 +17,9 @@
       window.eventHub.on('upload',data=>{
         $(this.view.el).addClass('actieve');
       })
+      window.eventHub.on('saveData',data=>{
+        $(this.view.el).removeClass('active');
+      })
     }
   }
 
