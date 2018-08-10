@@ -15,7 +15,7 @@
       this.initQiniu();
     },
     initQiniu(){
-      var uploader = Qiniu.uploader({
+      let uploader = Qiniu.uploader({
         disable_statistics_report: false, // 禁止自动发送上传统计信息到七牛，默认允许发送
         runtimes: 'html5', // 上传模式,依次退化
         browse_button: this.view.find('#uploadBtn'), // 上传选择的点选按钮，**必需**
@@ -42,15 +42,15 @@
         drop_element: this.view.find('#uploadBox'), // 拖曳上传区域元素的 ID，拖曳文件或文件夹后可触发上传
         chunk_size: '4mb', // 分块上传时，每块的体积
         auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传,
-        //x_vars : {
-        //    自定义变量，参考http://developer.qiniu.com/docs/v6/api/overview/up/response/vars.html
+        //x_lets : {
+        //    自定义变量，参考http://developer.qiniu.com/docs/v6/api/overview/up/response/lets.html
         //    'time' : function(up,file) {
-        //        var time = (new Date()).getTime();
+        //        let time = (new Date()).getTime();
         // do something with 'time'
         //        return time;
         //    },
         //    'size' : function(up,file) {
-        //        var size = file.size;
+        //        let size = file.size;
         // do something with 'size'
         //        return size;
         //    }
@@ -78,12 +78,12 @@
             // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
             
             console.log('上传成功')
-            var domain = up.getOption('domain');
-            var res = JSON.parse(info.response);
-            var key = res.key;
-            console.log(file,info)
-            var link = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
-            window.eventHub.emit('upload',{key,link})
+            let domain = up.getOption('domain');
+            let res = JSON.parse(info.response);
+            let name = res.key;
+            console.log(file,info);
+            let url = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
+            window.eventHub.emit('upload',{name,url})
           },
           'Error': function (up, err, errTip) {
             //上传出错时,处理相关的事情

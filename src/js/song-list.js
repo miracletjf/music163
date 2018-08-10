@@ -1,17 +1,20 @@
 {
   let view = {
     el: '.songList-container',
-    songs: [],
+    songLists: [],
     template: ` <ul class="songList"></ul>`,
     render(){
-      var ul = $(this.template);
-      this.songs.map(item=>{
-        ul.append($('<li></li>').html(item));
+      let ul = $(this.template);
+      this.songLists.map(item=>{
+        console.log(item);
+        let aaa = $('<li></li>').html(item.name);
+        console.log(aaa);
+        ul.append(aaa);
       })
       $(this.el).html(ul);
     },
     create(data){
-      this.songs.push(data);
+      this.songLists.push(data);
       this.render();
     }
   }
@@ -21,7 +24,7 @@
       this.view = view;
       this.model = model;
       this.view.render();
-      window.eventHub.on('saveData',(data)=>{
+      window.eventHub.on('saveData',data=>{
         this.view.create(data);
       })
     }

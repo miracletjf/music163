@@ -13,7 +13,6 @@ button {
   display: flex;
   flex-direction: column;
   width: 200px;
-  border-right: solid 1px #ddd;
 }
 .page > main {
   flex-grow: 1;
@@ -28,7 +27,7 @@ button {
   cursor: pointer;
 }
 .new-song.actieve {
-  background: #999;
+  background: #eee;
 }
 .songList-container {
   flex-grow: 1;
@@ -44,7 +43,7 @@ button {
   cursor: pointer;
 }
 .songList li:hover {
-  background: #999;
+  background: #eee;
   color: #fff;
 }
 .upload-song {
