@@ -1,29 +1,43 @@
 {
   let view = {
     el: '.songList-container',
-    songLists: [],
+    songList: [],
     template: ` <ul class="songList"></ul>`,
     render(){
       let ul = $(this.template);
-      this.songLists.map(item=>{
-        console.log(item);
-        let aaa = $('<li></li>').html(item.name);
-        console.log(aaa);
-        ul.append(aaa);
+      this.songList.map(item=>{
+        let li = $('<li></li>').html(item.name);
+        ul.append(li);
       })
       $(this.el).html(ul);
     },
     create(data){
-      this.songLists.push(data);
+      this.songList.push(data);
       this.render();
     }
   }
-  let model = {}
+  let model = {
+    songList: [],
+    fetchSongs(){
+      let Song = AV.Object.extend('Song');
+      var query = new AV.Query('Song');
+
+      // 批量获取
+      return query.find().then(todos=>{
+        this.songList = todos.map(todo=>{
+          return {id:todo.id,...todo.attributes};
+        })
+      });
+    }
+  }
   let controller = {
     init(view,model){
       this.view = view;
       this.model = model;
-      this.view.render();
+      this.model.fetchSongs().then((todos)=>{
+        this.view.songList = this.model.songList;
+        this.view.render();
+      })
       window.eventHub.on('saveData',data=>{
         this.view.create(data);
       })
