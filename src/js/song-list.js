@@ -1,31 +1,30 @@
 {
   let view = {
     el: '.songList-container',
-    songList: [],
     template: ` <ul class="songList"></ul>`,
-    render(){
+    render(data){
       let ul = $(this.template);
-      this.songList.map(item=>{
+      let {songList} = data;
+      songList.map(item=>{
+        console.log(item)
         let li = $('<li></li>').html(item.name);
+        li.attr('data-song-id',item.id);
+        li.attr('data-url',item.url);
         ul.append(li);
       })
       $(this.el).html(ul);
-    },
-    create(data){
-      this.songList.push(data);
-      this.render();
     }
   }
   let model = {
-    songList: [],
+    data: {
+      songList: []
+    },
     fetchSongs(){
-      let Song = AV.Object.extend('Song');
       var query = new AV.Query('Song');
-
       // 批量获取
-      return query.find().then(todos=>{
-        this.songList = todos.map(todo=>{
-          return {id:todo.id,...todo.attributes};
+      return query.find().then(songs=>{
+        this.data.songList = songs.map(song=>{
+          return {id: song.id,...song.attributes};
         })
       });
     }
@@ -34,12 +33,13 @@
     init(view,model){
       this.view = view;
       this.model = model;
-      this.model.fetchSongs().then((todos)=>{
-        this.view.songList = this.model.songList;
-        this.view.render();
+      this.model.fetchSongs().then(()=>{
+        console.log(this.model.data.songList);
+        this.view.render(this.model.data);
       })
       window.eventHub.on('saveData',data=>{
-        this.view.create(data);
+        this.model.data.songList.push(data);
+        this.view.render(this.model.data);
       })
     }
   }

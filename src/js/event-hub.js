@@ -2,7 +2,6 @@ window.eventHub = {
   events: {},
   emit(eventName,data){
     let events = this.events;
-    console.log(events[eventName])
     events[eventName].map(fn => {
       fn.call(null,data);
     })
