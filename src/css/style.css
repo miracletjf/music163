@@ -26,7 +26,7 @@ button {
   border-bottom: solid 1px #aaa;
   cursor: pointer;
 }
-.new-song.actieve {
+.new-song.active {
   background: #eee;
 }
 .songList-container {
@@ -43,8 +43,10 @@ button {
   cursor: pointer;
 }
 .songList li:hover {
-  background: #eee;
-  color: #fff;
+  background: #aaa;
+}
+.songList li.active {
+  background: #aaa;
 }
 .upload-song {
   font-size: 15px;

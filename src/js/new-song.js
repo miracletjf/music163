@@ -4,6 +4,10 @@
     template: `新建歌曲`,
     render(data){
       $(this.el).html(this.template);
+    },
+    active(elemnt){
+      $(elemnt).addClass('active');
+      window.eventHub.emit('newSong');
     }
   }
 
@@ -14,11 +18,23 @@
       this.view = view;
       this.model = model;
       this.view.render();
+      this.bindEvents();
+      this.bindEventHub();
+    },
+    bindEventHub(){
       window.eventHub.on('upload',data=>{
-        $(this.view.el).addClass('actieve');
+        $(this.view.el).addClass('active');
       })
       window.eventHub.on('saveData',data=>{
         $(this.view.el).removeClass('active');
+      })
+      window.eventHub.on('selectItem',data=>{
+        $(this.view.el).removeClass('active');
+      })
+    },
+    bindEvents(){
+      $(this.view.el).on('click',e=>{
+        this.view.active(e.currentTarget);
       })
     }
   }

@@ -40,6 +40,12 @@
     },
     reset(){
       this.render({});
+    },
+    findElements(selector){
+      return $(this.el).find(selector);
+    },
+    changeTitle(title){
+      this.findElements('.text-title').text(title);
     }
   }
 
@@ -60,12 +66,8 @@
       this.view = view;
       this.model = model;
       this.view.render();
-      window.eventHub.on('upload',data => {
-        //去除文件名后缀
-        data.name = data.name.replace(/\.mp3/,'');
-        this.view.render(data);
-      })
       this.bindEvents();
+      this.bindEventHubs();
     },
     bindEvents(){
       $(this.view.el).on('submit','form',(e)=>{
@@ -82,6 +84,25 @@
           let obj = JSON.parse(string);
           window.eventHub.emit('saveData',obj);
         });
+      })
+    },
+    bindEventHubs(){
+      window.eventHub.on('upload',data => {
+        this.view.changeTitle('新建歌曲');
+        //去除文件名后缀
+        data.name = data.name.replace(/\.mp3/,'');
+        this.view.render(data);
+      })
+      window.eventHub.on('selectItem',data=>{
+        this.view.changeTitle('编辑歌曲');
+        let names = ('name author url').split(' ');
+        names.forEach(item=>{
+          this.view.findElements(`[name="${item}"]`).val(data[item]);
+        })
+      })
+      window.eventHub.on('newSong',()=>{
+        this.view.changeTitle('新建歌曲');
+        this.view.reset();
       })
     }
   }
