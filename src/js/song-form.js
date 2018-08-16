@@ -3,9 +3,6 @@
     el: '#song_form',
     template: `
     <form action="">
-      <div class="text-title">
-        新建歌曲
-      </div>
       <div class="row-box">
         <label>
           <span class="name">歌 名</span>
@@ -37,6 +34,11 @@
         html = html.replace(`--${item}--`,data[item] || '');
       })
       $(this.el).html(html);
+      if(data.id){
+        $(this.el).find('form').prepend('<div class="text-title"> 编辑歌曲 </div>')
+      }else {
+        $(this.el).find('form').prepend('<div class="text-title"> 新建歌曲 </div>')
+      }
     },
     reset(){
       this.render({});
@@ -88,20 +90,16 @@
     },
     bindEventHubs(){
       window.eventHub.on('upload',data => {
-        this.view.changeTitle('新建歌曲');
         //去除文件名后缀
         data.name = data.name.replace(/\.mp3/,'');
-        this.view.render(data);
+        this.model.data = data;
+        this.view.render(this.model.data);
       })
       window.eventHub.on('selectItem',data=>{
-        this.view.changeTitle('编辑歌曲');
-        let names = ('name author url').split(' ');
-        names.forEach(item=>{
-          this.view.findElements(`[name="${item}"]`).val(data[item]);
-        })
+        this.model.data = data;
+        this.view.render(this.model.data);
       })
       window.eventHub.on('newSong',()=>{
-        this.view.changeTitle('新建歌曲');
         this.view.reset();
       })
     }
