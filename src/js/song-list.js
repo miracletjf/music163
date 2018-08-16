@@ -60,12 +60,22 @@
       })
     },
     bindEventHub(){
+      window.eventHub.on('newSong',()=>{
+        this.view.removeLiActive();
+      })
       window.eventHub.on('saveData',data=>{
         this.model.data.songList.push(data);
         this.view.render(this.model.data);
       })
-      window.eventHub.on('newSong',()=>{
-        this.view.removeLiActive();
+      window.eventHub.on('modify',data=>{
+        let songs = this.model.data.songList;
+        this.model.data.songList = songs.map(item=>{
+          if(item.id === data.id){
+            item = data;
+          }
+          return item;
+        })
+        this.view.render(this.model.data)
       })
     }
   }

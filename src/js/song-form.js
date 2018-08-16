@@ -60,6 +60,16 @@
         let {id,attributes} = object;
         Object.assign(this.data, {id,...attributes});
       })
+    },
+    modify(data){
+        // 第一个参数是 className，第二个参数是 objectId
+        var song = AV.Object.createWithoutData('Song', data.id);
+        // 修改属性
+        ('name author url').split(' ').map(item=>{
+          song.set(item,data[item]);
+        });
+        // 保存到云端
+        return song.save();
     }
   }
 
@@ -80,12 +90,11 @@
           data[name] = $(this.view.el).find(`[name="${name}"]`).val();
         })
 
-        this.model.create(data).then(()=>{
-          this.view.reset();
-          let string = JSON.stringify(this.model.data);
-          let obj = JSON.parse(string);
-          window.eventHub.emit('saveData',obj);
-        });
+        if(this.model.data.id){
+          this.modifyData(data);
+        }else{
+          this.createData(data);
+        }
       })
     },
     bindEventHubs(){
@@ -101,6 +110,24 @@
       })
       window.eventHub.on('newSong',()=>{
         this.view.reset();
+      })
+    },
+    createData(data){
+      this.model.create(data).then(()=>{
+        this.view.reset();
+        // 拷贝对象，
+        //   否则将会传递对象地址，
+        //   产生bug，列表数据指向同一个地址
+        let obj = JSON.parse(JSON.stringify(this.model.data));
+        window.eventHub.emit('saveData',obj);
+      });
+    },
+    modifyData(data){
+      this.model.modify(data).then(()=>{
+        this.model.data = data;
+        this.view.render(this.model.data);
+        let obj = JSON.parse(JSON.stringify(this.model.data));
+          window.eventHub.emit('modifyData',obj);
       })
     }
   }
