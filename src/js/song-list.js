@@ -6,10 +6,12 @@
       let ul = $(this.template);
       let {songList} = data;
       songList.map(item=>{
+        console.log(item);
         let li = $('<li></li>').html(item.name);
         li.attr('data-song-id',item.id);
         li.attr('data-url',item.url);
         ul.append(li);
+        console.log('1111',li.attr('data-song-id'));
       })
       $(this.el).html(ul);
     },
@@ -52,7 +54,10 @@
     bindEvents(){
       $(this.view.el).on('click','li',(e) => {
         let id = this.view.activeItem(e.currentTarget);
+        console.log('list',id);
         this.model.data.songList.forEach(item => {
+          console.log('id=',item.id);
+          console.log(item)
           if(item.id === id){
             window.eventHub.emit('selectItem',item);
           }
@@ -67,7 +72,7 @@
         this.model.data.songList.push(data);
         this.view.render(this.model.data);
       })
-      window.eventHub.on('modify',data=>{
+      window.eventHub.on('modifyData',data=>{
         let songs = this.model.data.songList;
         this.model.data.songList = songs.map(item=>{
           if(item.id === data.id){

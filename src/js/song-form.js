@@ -33,6 +33,7 @@
       placeholders.map(item=>{
         html = html.replace(`--${item}--`,data[item] || '');
       })
+      console.log('form',data.id);
       $(this.el).html(html);
       if(data.id){
         $(this.el).find('form').prepend('<div class="text-title"> 编辑歌曲 </div>')
@@ -54,9 +55,10 @@
   let model = {
     data: {id:'',name:'',author:'',url:''},
     create(data){
+      let {name,author,url} = data;
       let Song = AV.Object.extend('Song');
       let song = new Song();
-      return song.save(data).then(object=>{ 
+      return song.save({name,author,url}).then(object=>{
         let {id,attributes} = object;
         Object.assign(this.data, {id,...attributes});
       })
@@ -90,10 +92,12 @@
           data[name] = $(this.view.el).find(`[name="${name}"]`).val();
         })
 
+        Object.assign(this.model.data,data);
+
         if(this.model.data.id){
-          this.modifyData(data);
+          this.modifyData(this.model.data);
         }else{
-          this.createData(data);
+          this.createData(this.model.data);
         }
       })
     },
@@ -118,16 +122,16 @@
         // 拷贝对象，
         //   否则将会传递对象地址，
         //   产生bug，列表数据指向同一个地址
+        console.log(this.model.data);
         let obj = JSON.parse(JSON.stringify(this.model.data));
         window.eventHub.emit('saveData',obj);
       });
     },
     modifyData(data){
       this.model.modify(data).then(()=>{
-        this.model.data = data;
         this.view.render(this.model.data);
         let obj = JSON.parse(JSON.stringify(this.model.data));
-          window.eventHub.emit('modifyData',obj);
+        window.eventHub.emit('modifyData',obj);
       })
     }
   }
