@@ -33,7 +33,6 @@
       placeholders.map(item=>{
         html = html.replace(`--${item}--`,data[item] || '');
       })
-      console.log('form',data.id);
       $(this.el).html(html);
       if(data.id){
         $(this.el).find('form').prepend('<div class="text-title"> 编辑歌曲 </div>')
@@ -72,6 +71,10 @@
         });
         // 保存到云端
         return song.save();
+    },
+    resetData(){
+      this.data = {id:'',name:'',author:'',url:''};
+      window.eventHub.emit('newSong');
     }
   }
 
@@ -91,11 +94,11 @@
         names.map(name=>{
           data[name] = $(this.view.el).find(`[name="${name}"]`).val();
         })
-
+        
         Object.assign(this.model.data,data);
-
+        
         if(this.model.data.id){
-          this.modifyData(this.model.data);
+          this.modifyData(this.model.data)
         }else{
           this.createData(this.model.data);
         }
@@ -113,11 +116,14 @@
         this.view.render(this.model.data);
       })
       window.eventHub.on('newSong',()=>{
+        if(this.model.data.id){
+          this.model.resetData();
+        }
         this.view.reset();
       })
     },
     createData(data){
-      this.model.create(data).then(()=>{
+      return this.model.create(data).then(()=>{
         this.view.reset();
         // 拷贝对象，
         //   否则将会传递对象地址，
@@ -125,15 +131,18 @@
         console.log(this.model.data);
         let obj = JSON.parse(JSON.stringify(this.model.data));
         window.eventHub.emit('saveData',obj);
+        this.model.resetData();
       });
     },
     modifyData(data){
-      this.model.modify(data).then(()=>{
+      return this.model.modify(data).then(()=>{
         this.view.render(this.model.data);
         let obj = JSON.parse(JSON.stringify(this.model.data));
         window.eventHub.emit('modifyData',obj);
+        this.model.resetData();
       })
-    }
+    },
+
   }
 
   controller.init(view,model);

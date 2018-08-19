@@ -6,7 +6,6 @@
       let ul = $(this.template);
       let {songList} = data;
       songList.map(item=>{
-        console.log(item);
         let li = $('<li></li>').html(item.name);
         li.attr('data-song-id',item.id);
         li.attr('data-url',item.url);
@@ -54,10 +53,7 @@
     bindEvents(){
       $(this.view.el).on('click','li',(e) => {
         let id = this.view.activeItem(e.currentTarget);
-        console.log('list',id);
         this.model.data.songList.forEach(item => {
-          console.log('id=',item.id);
-          console.log(item)
           if(item.id === id){
             window.eventHub.emit('selectItem',item);
           }

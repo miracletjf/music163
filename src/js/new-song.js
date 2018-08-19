@@ -6,7 +6,6 @@
       $(this.el).html(this.template);
     },
     active(elemnt){
-      $(elemnt).addClass('active');
       window.eventHub.emit('newSong');
     }
   }
@@ -30,6 +29,9 @@
       })
       window.eventHub.on('selectItem',data=>{
         $(this.view.el).removeClass('active');
+      })
+      window.eventHub.on('newSong',()=>{
+        $(this.view.el).addClass('active');
       })
     },
     bindEvents(){
