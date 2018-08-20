@@ -5,8 +5,11 @@
     render(data){
       $(this.el).html(this.template);
     },
-    active(elemnt){
-      window.eventHub.emit('newSong');
+    active(){
+      $(this.el).addClass('active');
+    },
+    deActive(){
+      $(this.el).removeClass('active');
     }
   }
 
@@ -22,21 +25,21 @@
     },
     bindEventHub(){
       window.eventHub.on('upload',data=>{
-        $(this.view.el).addClass('active');
+        this.view.active();
       })
-      window.eventHub.on('saveData',data=>{
-        $(this.view.el).removeClass('active');
-      })
+      // window.eventHub.on('saveData',data=>{
+      //   this.view.deActive();
+      // })
       window.eventHub.on('selectItem',data=>{
-        $(this.view.el).removeClass('active');
+        this.view.deActive();
       })
       window.eventHub.on('newSong',()=>{
-        $(this.view.el).addClass('active');
+        this.view.active();
       })
     },
     bindEvents(){
       $(this.view.el).on('click',e=>{
-        this.view.active(e.currentTarget);
+        window.eventHub.emit('newSong');
       })
     }
   }

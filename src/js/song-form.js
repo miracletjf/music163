@@ -74,7 +74,6 @@
     },
     resetData(){
       this.data = {id:'',name:'',author:'',url:''};
-      window.eventHub.emit('newSong');
     }
   }
 
@@ -113,6 +112,7 @@
       })
       window.eventHub.on('selectItem',data=>{
         this.model.data = data;
+        this.view.activeItem = $('[data-song-id="'+data.id+'"]');
         this.view.render(this.model.data);
       })
       window.eventHub.on('newSong',()=>{
@@ -139,6 +139,7 @@
         this.view.render(this.model.data);
         let obj = JSON.parse(JSON.stringify(this.model.data));
         window.eventHub.emit('modifyData',obj);
+        this.view.activeItem.addClass('active');
         this.model.resetData();
       })
     },
