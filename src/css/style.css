@@ -1,104 +1,93 @@
-*{padding: 0;margin: 0;}
-*{box-sizing: border-box;}
-*::after{box-sizing: border-box;}
-*::before{box-sizing: border-box;}
-a {color: inherit;}
-ul,ol{list-style: none;}
+* {
+  padding: 0;
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+*::after {
+  box-sizing: border-box;
+}
+*::before {
+  box-sizing: border-box;
+}
+a {
+  color: inherit;
+}
+ul,
+ol {
+  list-style: none;
+}
 button {
   border: none;
 }
-
-.page {display: flex; height: 100vh;}
-.page > aside {
+.site-loading {
+  position: fixed;
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  z-index: 3;
+  color: #999;
+}
+.site-loading::after {
+  content: '';
+  display: block;
+  width: 100px；
+    height： 100px;
+  background: #777;
+  border-radius: 50%;
+}
+.page {
+  display: flex;
+  height: 100vh;
+}
+.page aside {
   display: flex;
   flex-direction: column;
   width: 200px;
 }
-.page > main {
+.page main {
   flex-grow: 1;
   padding-left: 40px;
   background: #eee;
 }
-.new-song {
-  text-align: center;
-  line-height: 40px;
-  font-size: 18px;
-  border-bottom: solid 1px #aaa;
-  cursor: pointer;
-}
-.new-song.active {
-  background: #eee;
-}
-.songList-container {
-  flex-grow: 1;
-}
-.songList { }
-.songList li {
-  display: block;
-  font-size: 15px;
-  line-height: 34px;
-  padding-left: 20px;
-  border-bottom: dashed 1px #aaa;
-  box-shadow: 0 1px 0 #eee;
-  cursor: pointer;
-}
-.songList li:hover {
-  background: #aaa;
-}
-.songList li.active {
-  background: #aaa;
-}
-.upload-song {
-  font-size: 15px;
-  line-height: 20px;
-  text-align: center;
-}
-.upload-song button {
-  font-size: inherit;
-  border: none;
-  background: none;
-  color: #666;
-  cursor: pointer;
-}
-.upload-song button:hover {
-  text-decoration: underline;
-}
-
-
-main .text-title {
+.page main .text-title {
   margin-top: 10px;
   margin-bottom: 18px;
   font-size: 26px;
   line-height: 40px;
   font-weight: bold;
 }
-main .row-box {
+.page main .row-box {
   display: flex;
   margin-bottom: 10px;
 }
-main .row-box label {
+.page main .row-box label {
   display: flex;
   align-items: center;
 }
-main .row-box .name {
+.page main .row-box .name {
   display: block;
   width: 65px;
   text-align: right;
   margin-right: 5px;
   font-size: 16px;
 }
-main .row-box .ipt {
+.page main .row-box .ipt {
   padding: 4px;
   width: 200px;
   line-height: 18px;
   border-radius: 4px;
   border: solid 1px #ddd;
 }
-main .row-box .btn-box {
+.page main .row-box .btn-box {
   margin-left: 70px;
   margin-top: 10px;
 }
-main .btn-box button {
+.page main .btn-box button {
   padding: 0 16px;
   margin-right: 10px;
   line-height: 30px;
@@ -107,4 +96,45 @@ main .btn-box button {
   background: #fff;
   border-radius: 4px;
   cursor: pointer;
+}
+.page .new-song {
+  text-align: center;
+  line-height: 40px;
+  font-size: 18px;
+  border-bottom: solid 1px #aaa;
+  cursor: pointer;
+}
+.page .new-song.active {
+  background: #eee;
+}
+.page .songList-container {
+  flex-grow: 1;
+}
+.page .songList-container .songList li {
+  display: block;
+  font-size: 15px;
+  line-height: 34px;
+  padding-left: 20px;
+  border-bottom: dashed 1px #aaa;
+  box-shadow: 0 1px 0 #eee;
+  cursor: pointer;
+}
+.page .songList-container .songList li:hover,
+.page .songList-container .songList li.active {
+  background: #aaa;
+}
+.page .upload-song {
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+}
+.page .upload-song button {
+  font-size: inherit;
+  border: none;
+  background: none;
+  color: #666;
+  cursor: pointer;
+}
+.page .upload-song button:hover {
+  text-decoration: underline;
 }

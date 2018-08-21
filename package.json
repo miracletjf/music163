@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-less": "^4.0.1",
+    "gulp-sass": "^4.0.1",
     "jquery": "^3.3.1",
     "leancloud-storage": "^3.8.0",
     "plupload": "^2.3.6",
