@@ -121,6 +121,10 @@
         }
         this.view.reset();
       })
+      window.eventHub.on('modifyData',()=>{
+        this.model.resetData();
+        this.view.reset();
+      })
     },
     createData(data){
       return this.model.create(data).then(()=>{
@@ -139,8 +143,6 @@
         this.view.render(this.model.data);
         let obj = JSON.parse(JSON.stringify(this.model.data));
         window.eventHub.emit('modifyData',obj);
-        this.view.activeItem.addClass('active');
-        this.model.resetData();
       })
     },
 
