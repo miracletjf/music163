@@ -63,10 +63,12 @@
           },
           'BeforeUpload': function (up, file) {
             // 每个文件上传前,处理相关的事情
+            window.eventHub.emit('loading');            
           },
           'UploadProgress': function (up, file) {
             // 每个文件上传时,处理相关的事情
-            console.log('上传中。。。')
+            console.log(up,file);
+            
           },
           'FileUploaded': function (up, file, info) {
             // 每个文件上传成功后,处理相关的事情
@@ -76,14 +78,16 @@
             //    "key": "gogopher.jpg"
             //  }
             // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+
+            window.eventHub.emit('loadinged');
             
-            console.log('上传成功')
             let domain = up.getOption('domain');
             let res = JSON.parse(info.response);
             let name = res.key;
             console.log(file,info);
             let url = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
             window.eventHub.emit('upload',{name,url})
+
           },
           'Error': function (up, err, errTip) {
             //上传出错时,处理相关的事情

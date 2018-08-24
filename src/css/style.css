@@ -21,25 +21,6 @@ ol {
 button {
   border: none;
 }
-.site-loading {
-  position: fixed;
-  display: block;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: #ffffff;
-  z-index: 3;
-  color: #999;
-}
-.site-loading::after {
-  content: '';
-  display: block;
-  width: 100px；
-    height： 100px;
-  background: #777;
-  border-radius: 50%;
-}
 .page {
   display: flex;
   height: 100vh;
