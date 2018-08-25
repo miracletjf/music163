@@ -6,7 +6,11 @@
     }
   }
 
-  let model = { }
+  let model = { 
+    data :{
+        uploading : false
+    }
+  }
   
   let controller = {
     init(view,model){
@@ -61,16 +65,16 @@
               // 文件添加进队列后,处理相关的事情
             });
           },
-          'BeforeUpload': function (up, file) {
+          'BeforeUpload': (up, file) =>{
             // 每个文件上传前,处理相关的事情
-            window.eventHub.emit('loading');            
+            window.eventHub.emit('loading');    
+            
           },
           'UploadProgress': function (up, file) {
             // 每个文件上传时,处理相关的事情
-            console.log(up,file);
             
           },
-          'FileUploaded': function (up, file, info) {
+          'FileUploaded':  (up, file, info) => {
             // 每个文件上传成功后,处理相关的事情
             // 其中 info.response 是文件上传成功后，服务端返回的json，形式如
             // {
@@ -84,10 +88,8 @@
             let domain = up.getOption('domain');
             let res = JSON.parse(info.response);
             let name = res.key;
-            console.log(file,info);
             let url = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
             window.eventHub.emit('upload',{name,url})
-
           },
           'Error': function (up, err, errTip) {
             //上传出错时,处理相关的事情

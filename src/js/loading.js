@@ -15,9 +15,9 @@
       window.eventHub.on('loading',()=>{
         $(this.view.el).addClass('active');
       })
-       window.eventHub.on('loadinged',()=>{
-         $(this.view.el).removeClass('active');
-       })
+      window.eventHub.on('loadinged',()=>{
+        $(this.view.el).removeClass('active');
+      })
     }
   }
 

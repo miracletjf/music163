@@ -10,7 +10,6 @@
         li.attr('data-song-id',item.id);
         li.attr('data-url',item.url);
         ul.append(li);
-        console.log('1111',li.attr('data-song-id'));
       })
       $(this.el).html(ul);
     },
