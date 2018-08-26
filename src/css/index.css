@@ -4,6 +4,7 @@
 }
 * {
   box-sizing: border-box;
+  color: #333;
 }
 * {
   font-family: Helvetica, sans-serif;
@@ -13,6 +14,14 @@
 }
 *::before {
   box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
 }
 a {
   color: inherit;
@@ -32,6 +41,9 @@ body {
   background: #fcfcfd;
 }
 /* css变量 */
+.page.index {
+  padding-top: 5.2rem;
+}
 .page.index .sticky {
   position: fixed;
   width: 100%;
@@ -65,7 +77,6 @@ body {
   border-radius: 0.66666667rem;
 }
 .page.index .tabs {
-  border-bottom: solid 1px #f2f2f2;
   background-color: #fff;
 }
 .page.index .tabs .tabs-nav {
@@ -74,13 +85,17 @@ body {
   align-items: center;
   justify-content: center;
 }
-.page.index .tabs .tabs-nav::after {
+.page.index .tabs .tabs-nav::before {
   position: absolute;
   content: '';
   left: 0;
   top: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: solid 1px #f2f2f2;
 }
 .page.index .tabs .tabs-nav > li {
+  position: relative;
   display: block;
   flex: 1 1 0;
   text-align: center;
@@ -92,7 +107,7 @@ body {
   line-height: 2rem;
   font-size: 0.75rem;
 }
-.page.index .tabs .tabs-nav > li .text::after {
+.page.index .tabs .tabs-nav > li .text::before {
   position: absolute;
   content: '';
   width: 100%;
@@ -103,6 +118,42 @@ body {
 .page.index .tabs .tabs-nav > li.active .text {
   color: #d43c33;
 }
-.page.index .tabs .tabs-nav > li.active .text::after {
+.page.index .tabs .tabs-nav > li.active .text::before {
   border-bottom: solid 2px #d43c33;
+}
+.page.index .tab-content > li section {
+  padding-top: 1rem;
+}
+.page.index .tab-content > li section .sectionTitle {
+  position: relative;
+  display: block;
+  padding: 0 0.45rem;
+  margin-bottom: 0.3rem;
+  line-height: 1rem;
+  font-size: 0.85rem;
+}
+.page.index .tab-content > li section .sectionTitle::before {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 50%;
+  left: 0;
+  margin-top: -0.45rem;
+  width: 10px;
+  height: 0.8rem;
+  border-left: solid 2px #d43c33;
+}
+.page.index .tab-content > li section .lists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.page.index .tab-content > li section .lists > li {
+  display: block;
+  width: 32.85%;
+  margin: 0.4rem 0;
+  font-size: 0.65rem;
+}
+.page.index .tab-content > li section .lists > li .picture img {
+  width: 100%;
 }
