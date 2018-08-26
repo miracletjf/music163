@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>后台管理页面</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/loading.css">
+  <script src="../vendors/av.min.js"></script>
+  <script src="../node_modules/plupload/js/moxie.min.js"></script>
+  <script src="../vendors/plupload.min.js"></script>
+  <script src="../vendors/qiniu.min.js"></script>
+</head>
+<body>
+  <div class="site-loading" id="loading_box"></div>
+  <div class="page">
+    <aside>
+      <div class="new-song"></div>
+      <div class="songList-container"></div>
+      <div class="upload-song">
+        <div class="upload-box" id="uploadBox">
+          点击<button id="uploadBtn">上传</button><br>
+          或将文件拖拽到此上传
+        </div>
+      </div>
+    </aside>
+    <main id="song_form"></main>
+  </div>
+  <script src="../vendors/jquery.min.js"></script>
+  <script src="js/av.js"></script>
+  <script src="js/event-hub.js"></script>
+  
+  <script src="js/admin/loading.js"></script>
+  <script src="js/admin/song-form.js"></script>
+  <script src="js/admin/song-list.js"></script>
+  <script src="js/admin/new-song.js"></script>
+  <script src="js/admin/upload-song.js"></script>
+
+</body>
+
+</html>

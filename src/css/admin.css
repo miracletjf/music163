@@ -5,6 +5,9 @@
 * {
   box-sizing: border-box;
 }
+* {
+  font-family: Helvetica, sans-serif;
+}
 *::after {
   box-sizing: border-box;
 }
@@ -13,6 +16,7 @@
 }
 a {
   color: inherit;
+  text-decoration: none;
 }
 ul,
 ol {
@@ -20,6 +24,18 @@ ol {
 }
 button {
   border: none;
+}
+html {
+  font-size: 20px;
+}
+body {
+  background: #fcfcfd;
+}
+.upload-box {
+  padding: 10px;
+  display: block;
+  border: dashed 2px #aaa;
+  border-radius: 10px;
 }
 .page {
   display: flex;

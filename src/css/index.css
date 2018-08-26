@@ -1,0 +1,108 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+* {
+  font-family: Helvetica, sans-serif;
+}
+*::after {
+  box-sizing: border-box;
+}
+*::before {
+  box-sizing: border-box;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul,
+ol {
+  list-style: none;
+}
+button {
+  border: none;
+}
+html {
+  font-size: 20px;
+}
+body {
+  background: #fcfcfd;
+}
+/* css变量 */
+.page.index .sticky {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+.page.index .topBar {
+  display: flex;
+  padding: 0 0.5rem;
+  height: 3.2rem;
+  background-color: #d43c33;
+  align-items: center;
+  justify-content: space-between;
+}
+.page.index .topBar .logo {
+  display: flex;
+}
+.page.index .topBar .logo svg {
+  align-items: center;
+  width: 7.1rem;
+  height: 1.25rem;
+}
+.page.index .topBar .downloadApp {
+  display: block;
+  padding: 0 0.5rem;
+  height: 1.5rem;
+  line-height: calc(1.5rem - 2px);
+  font-size: 0.75rem;
+  color: #fff;
+  border: solid 1px #e27d77;
+  border-radius: 0.66666667rem;
+}
+.page.index .tabs {
+  border-bottom: solid 1px #f2f2f2;
+  background-color: #fff;
+}
+.page.index .tabs .tabs-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page.index .tabs .tabs-nav::after {
+  position: absolute;
+  content: '';
+  left: 0;
+  top: 0;
+}
+.page.index .tabs .tabs-nav > li {
+  display: block;
+  flex: 1 1 0;
+  text-align: center;
+}
+.page.index .tabs .tabs-nav > li .text {
+  position: relative;
+  padding: 0 0.25rem;
+  display: inline-block;
+  line-height: 2rem;
+  font-size: 0.75rem;
+}
+.page.index .tabs .tabs-nav > li .text::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+.page.index .tabs .tabs-nav > li.active .text {
+  color: #d43c33;
+}
+.page.index .tabs .tabs-nav > li.active .text::after {
+  border-bottom: solid 2px #d43c33;
+}
