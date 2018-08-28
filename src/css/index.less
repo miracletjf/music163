@@ -28,6 +28,7 @@
     width: 100%;
     top: 0;
     left: 0;
+    z-index: 2;
   }
   .topBar {
     display: flex;
@@ -52,7 +53,7 @@
       font-size: .75rem;
       color: #fff;
       border: solid 1px #e27d77;
-      border-radius: .75rem/.5rem;
+      border-radius: .75rem;
     }
   }
   .tabs {
@@ -190,6 +191,53 @@
             }
           }
          }
+      }
+      footer {
+        position: relative;
+        height: 53vw;
+        margin-top: .25rem;
+        background: url(../images/recommand_bg_3x.png) no-repeat center;
+        background-size: cover;
+        .download-logo {
+          padding-top: 3.45rem;
+          margin: 0 auto;
+          text-align: center;
+          .logosvg {
+            width: 11.5rem;
+            height: 2.2rem;
+          }
+        }
+        .download-btn {
+          position: relative;
+          display: block;
+          margin: .5rem auto 0;
+          width: 17rem;
+          height: 2rem;
+          line-height: 2rem;
+          font-size: .8rem;
+          text-align: center;
+          color: @mainColor;
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: block;
+            height: 100%;
+            width: 100%;
+            border: solid 1px @mainColor;
+            border-radius: 1rem;
+          }
+        }
+        .copyright {
+          margin-top: .15rem;
+          display: block;
+          line-height: 1rem;
+          text-align: center;
+          font-size: .6rem;
+          color: #888;
+          transform: scale(.75);
+        }
       }
     }
   }
