@@ -28,13 +28,13 @@
     }
     .downloadApp {
       display: block;
-      padding: 0 .5rem;
+      padding: 0 .45rem;
       height: 1.5rem;
       line-height: calc(1.5rem - 2px);
       font-size: .75rem;
       color: #fff;
       border: solid 1px #e27d77;
-      border-radius: .5rem/.75rem;
+      border-radius: .75rem/.5rem;
     }
   }
   .tabs {
@@ -90,6 +90,9 @@
   .tab-content {
     > li {
       section {
+        &.songs {
+          margin-top: .6rem;
+        }
         padding-top: 1rem;
         .sectionTitle {
           position: relative;
@@ -115,18 +118,30 @@
           flex-wrap: wrap;
           justify-content: space-between;
           & > li {
+            position: relative;
             display: block;
             width: 32.85%;
             margin: .4rem 0;
             font-size: .65rem;
             .picture {
+              font-size: 0;
               img {
                 width: 100%;
               }
-
+              .hot {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+              }
             }
-            p {
-
+            p.text {
+              display: -webkit-box;
+              padding: .2rem .3rem 0;
+              font-size: .65rem;
+              line-height: .8rem;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
             }
           }
         }

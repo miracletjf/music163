@@ -68,13 +68,13 @@ body {
 }
 .page.index .topBar .downloadApp {
   display: block;
-  padding: 0 0.5rem;
+  padding: 0 0.45rem;
   height: 1.5rem;
   line-height: calc(1.5rem - 2px);
   font-size: 0.75rem;
   color: #fff;
   border: solid 1px #e27d77;
-  border-radius: 0.66666667rem;
+  border-radius: 1.5rem;
 }
 .page.index .tabs {
   background-color: #fff;
@@ -124,6 +124,9 @@ body {
 .page.index .tab-content > li section {
   padding-top: 1rem;
 }
+.page.index .tab-content > li section.songs {
+  margin-top: 0.6rem;
+}
 .page.index .tab-content > li section .sectionTitle {
   position: relative;
   display: block;
@@ -149,11 +152,29 @@ body {
   justify-content: space-between;
 }
 .page.index .tab-content > li section .lists > li {
+  position: relative;
   display: block;
   width: 32.85%;
   margin: 0.4rem 0;
   font-size: 0.65rem;
 }
+.page.index .tab-content > li section .lists > li .picture {
+  font-size: 0;
+}
 .page.index .tab-content > li section .lists > li .picture img {
   width: 100%;
+}
+.page.index .tab-content > li section .lists > li .picture .hot {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.page.index .tab-content > li section .lists > li p.text {
+  display: -webkit-box;
+  padding: 0.2rem 0.3rem 0;
+  font-size: 0.65rem;
+  line-height: 0.8rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
