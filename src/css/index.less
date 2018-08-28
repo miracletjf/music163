@@ -3,6 +3,24 @@
 /* css变量 */
 @mainColor: #d43c33;
 
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+  &.icon-sq {
+    width: .7rem;
+    height: .7rem;
+    fill: #FE672E;
+    vertical-align: -.2em;
+  }
+  &.icon-bofang {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: #aaa;
+  }
+}
+
 .page.index {
   padding-top: 5.2rem;
   .sticky {
@@ -113,6 +131,7 @@
             border-left: solid 2px @mainColor;
           }
         }
+
         .lists {
           display: flex;
           flex-wrap: wrap;
@@ -145,6 +164,32 @@
             }
           }
         }
+
+        .list {
+          margin-top: .75rem;
+          .item {
+            display: block;
+            position: relative;
+            margin-left: .5rem;
+            padding: .4rem 2.1rem .4rem 0;
+            border-bottom: solid 1px #f1f1f1;
+            h3 {
+              font-size: .85rem;
+            }
+            .text {
+              padding-top: .1rem;
+              font-size: .6rem;
+              color: #aaa;
+            }
+            i {
+              position: absolute;
+              display: block;
+              top: 50%;
+              right: .5rem;
+              transform: translateY(-50%);
+            }
+          }
+         }
       }
     }
   }
