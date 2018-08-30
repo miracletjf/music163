@@ -24,11 +24,14 @@
       this.model = model;
       this.view.init();
       this.view.render();
+      this.bindEvents();
     },
     bindEvents(){
-      this.view.$el.on('click','.tabs-nav>li',(e)=>{
+      this.view.$el.on('click','.tabs-nav > li',(e)=>{
         let $li = $(e.currentTarget);
+        $li.addClass('active').siblings().removeClass('active');
         let tabName = $li.attr('data-tab-name');
+        console.log(tabName);
         window.eventHub.emit('selectTab',tabName);
       })
     }

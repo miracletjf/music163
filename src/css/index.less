@@ -108,6 +108,10 @@
 
   .tab-content {
     > li {
+      display: none;      
+      &.active {
+        display: block;
+      }
       section {
         &.songs {
           margin-top: .6rem;

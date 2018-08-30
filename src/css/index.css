@@ -140,6 +140,12 @@ body {
 .page.index .tabs .tabs-nav > li.active .text::before {
   border-bottom: solid 2px #d43c33;
 }
+.page.index .tab-content > li {
+  display: none;
+}
+.page.index .tab-content > li.active {
+  display: block;
+}
 .page.index .tab-content > li section {
   padding-top: 1rem;
 }
