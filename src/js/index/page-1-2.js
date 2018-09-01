@@ -2,7 +2,7 @@
   let view = {
     el: '#songList',
     template: `<li>
-      <a href="" class="item" data-song-id="{{id}}">
+      <a href="./song.html?id={{id}}" class="item">
         <h3>{{name}}</h3>
         <p class="text">
           <svg class="icon icon-sq" aria-hidden="true"> <use xlink:href="#icon-sq"></use> </svg>
