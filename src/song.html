@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title></title>
   <link rel="stylesheet" href="./css/index.css">
@@ -10,8 +10,9 @@
 </head>
 <body>
   <div class="page song" id="songPage">
-    <div class="bg-wrap"></div>
-    <div class="content">
+    <div class="bg-wrap"><div class="bg-box" id="bgBox"></div></div>
+    <div class="content" id="songContent">
+      <audio src="#"></audio>
       <section class="disc">
         <span class="icon-play"></span>
         <div class="disc-circle">
@@ -22,10 +23,10 @@
       </section>
       <section class="decription">
         <h2>
-          <span class="name">可一可再</span> - <span class="author">陈奕迅/eason and duo band</span>
+          <span class="name" id="songName">可一可再</span> - <span class="author" id="songAuthor">陈奕迅/eason and duo band</span>
         </h2>
         <div class="lyric">
-          <div class="lines"> 
+          <div class="lines" id="lyric">
             <p>来自摸异乡的 无限笑容</p>
             <p class="active">平静友善的 天生形状怪异的</p>
             <p>全部也是真的 多么好看</p>

@@ -13,29 +13,33 @@
     </div>`,
     init(){
       this.$el = $(this.el);
+      this.audio = this.$el.find('audio')[0];
+      this.$songContent = this.$el.find('#songContent');
+      this.$name = this.$el.find('#songName');
+      this.$author = this.$el.find('#songAuthor');
+      this.$bgBox = this.$el.find('#bgBox');
+      this.$lyric = this.$el.find('#lyric');
     },
     render(data){
       let props = data.props;
       let song = data.song;
-      let resHtml = this.template;
-      props.map(item=>{
-        resHtml = resHtml.replace(`{{${item}}}`,song[item]);
-      })
-      this.$el.append(resHtml);
+      this.audio.src = song.url;
+      this.$name.text(song.name);
+      this.$author.text(song.author);
+      window.eventHub.emit('startPlay');
     },
     play(){
-      let audio = this.$el.find('audio')[0];
-      audio.play();
+      this.audio.play();
     },
     pause(){
-      let audio = this.$el.find('audio')[0];      
-      audio.pause();
+      this.audio.pause();
     }
 
   }
 
   let model = {
     data:{
+      status: 'ready',
       props: ['id','name','author','url']
     },
     setId(id){
@@ -47,7 +51,7 @@
       return query.get(songId).then(song =>{
         this.data.song = {id: song.id,...song.attributes};
       }, function (error) {
-        console.log('获取数据失败！')
+        console.log('获取数据失败！');
       });
     }
   }
@@ -60,15 +64,39 @@
       this.getSongId();
       this.getSong();
       this.bindEvents();
+      this.bindEventHubs();
     },
     bindEvents(){
-      this.view.$el.on('click','#play',(e)=>{
-        this.view.play();
-      })
-      this.view.$el.on('click','#pause',(e)=>{
-        this.view.pause();
+      this.view.$songContent.on('click',e=>{
+        if(this.model.data.status === 'playing'){
+          window.eventHub.emit('pause');
+        }else {
+          window.eventHub.emit('play');
+        }
       })
     } ,
+    bindEventHubs(){
+      window.eventHub.on('startPlay',()=>{
+        $(this.view.audio).on('canplay',()=>{
+          console.log(1);
+          this.view.play();
+          this.model.data.status = 'playing';
+          this.view.$songContent.addClass('active');
+        })
+      })
+      window.eventHub.on('pause',()=>{
+        if(this.model.data.status === 'ready') return;
+        this.view.pause();
+        this.model.data.status = 'pause';
+        this.view.$songContent.removeClass('active');
+      })
+      window.eventHub.on('play',()=>{
+        if(this.model.data.status === 'ready') return;
+        this.view.play();
+        this.model.data.status = 'playing';
+        this.view.$songContent.addClass('active');
+      })
+    },
     getSongId(){
       let serachString = window.location.search;
       let songId = serachString.split('=')[1];

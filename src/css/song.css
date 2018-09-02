@@ -44,6 +44,14 @@ html {
 body {
   background: #fcfcfd;
 }
+@keyframes circling {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .page.song {
   position: relative;
   width: 100vw;
@@ -57,8 +65,7 @@ body {
   height: 100vh;
   overflow: hidden;
 }
-.page.song .bg-wrap::before {
-  content: '';
+.page.song .bg-wrap .bg-box {
   display: block;
   position: absolute;
   left: 0;
@@ -87,6 +94,12 @@ body {
   bottom: 2.5rem;
   width: 100vw;
 }
+.page.song .content.active .disc .icon-play {
+  visibility: hidden;
+}
+.page.song .content.active .disc .disc-circle {
+  animation-play-state: running;
+}
 .page.song .content::before {
   content: '';
   display: block;
@@ -107,6 +120,7 @@ body {
 }
 .page.song .content .disc .icon-play {
   position: absolute;
+  visibility: visible;
   width: 3.25rem;
   height: 3.25rem;
   left: 50%;
@@ -121,6 +135,8 @@ body {
   display: block;
   width: 100%;
   height: 100%;
+  animation: circling 18s linear infinite;
+  animation-play-state: paused;
 }
 .page.song .content .disc .disc-circle::before {
   content: '';
