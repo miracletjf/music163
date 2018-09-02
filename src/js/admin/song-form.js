@@ -22,13 +22,19 @@
         </label>
       </div>
       <div class="row-box">
+      <label>
+        <span class="name">图片</span>
+        <input name="imgUrl" type="text" class="ipt" value="--imgUrl--">
+      </label>
+    </div>
+      <div class="row-box">
         <div class="btn-box"> 
           <button>确认</button>
         </div>
       </div>
     </form> `,
     render(data = {}){
-      let placeholders = ['name','author','url','id'];
+      let placeholders = ['name','author','url','id','imgUrl'];
       let html = this.template;
       placeholders.map(item=>{
         html = html.replace(`--${item}--`,data[item] || '');
@@ -52,12 +58,12 @@
   }
 
   let model = {
-    data: {id:'',name:'',author:'',url:''},
+    data: {id:'',name:'',author:'',url:'',imgUrl:''},
     create(data){
-      let {name,author,url} = data;
+      let {name,author,url,imgUrl} = data;
       let Song = AV.Object.extend('Song');
       let song = new Song();
-      return song.save({name,author,url}).then(object=>{
+      return song.save({name,author,url,imgUrl}).then(object=>{
         let {id,attributes} = object;
         Object.assign(this.data, {id,...attributes});
       })
@@ -66,14 +72,14 @@
         // 第一个参数是 className，第二个参数是 objectId
         var song = AV.Object.createWithoutData('Song', data.id);
         // 修改属性
-        ('name author url').split(' ').map(item=>{
+        ('name author url imgUrl').split(' ').map(item=>{
           song.set(item,data[item]);
         });
         // 保存到云端
         return song.save();
     },
     resetData(){
-      this.data = {id:'',name:'',author:'',url:''};
+      this.data = {id:'',name:'',author:'',url:'',imgUrl:''};
     }
   }
 
@@ -88,7 +94,7 @@
     bindEvents(){
       $(this.view.el).on('submit','form',(e)=>{
         e.preventDefault();
-        let names = ('name author url').split(' ');
+        let names = ('name author url imgUrl').split(' ');
         let data = {};
         names.map(name=>{
           data[name] = $(this.view.el).find(`[name="${name}"]`).val();
@@ -108,6 +114,10 @@
         //去除文件名后缀
         data.name = data.name.replace(/\.mp3/,'');
         this.model.data = data;
+        this.view.render(this.model.data);
+      })
+      window.eventHub.on('uploadImg', imgUrl =>{
+        this.model.data.imgUrl = imgUrl;
         this.view.render(this.model.data);
       })
       window.eventHub.on('selectItem',data=>{

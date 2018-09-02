@@ -2,7 +2,7 @@
   let view = {
     el: '.upload-song',
     find(selector){
-      return $(this.el).find(selector)[0];
+      return $(this.el).find(selector);
     }
   }
 
@@ -16,13 +16,40 @@
     init(view,model){
       this.view = view;
       this.model = model;
-      this.initQiniu();
+      this.bindQinius();
     },
-    initQiniu(){
+    bindQinius(){
+      this.bindUploadMp3();
+      this.bindUploadImg();
+    },
+    bindUploadMp3(){
+      this.packageQiniu('#uploadBtn',(up,file)=>{
+        window.eventHub.emit('loading'); 
+      },(up, file, info)=>{
+        window.eventHub.emit('loadinged');
+        let domain = up.getOption('domain');
+        let res = JSON.parse(info.response);
+        let name = res.key;
+        let url = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
+        window.eventHub.emit('upload',{name,url})
+      })
+    },
+    bindUploadImg(){
+      this.packageQiniu('#uploadImgBtn',(up,file)=>{
+        window.eventHub.emit('loading'); 
+      },(up, file, info)=>{
+        window.eventHub.emit('loadinged');
+        let domain = up.getOption('domain');
+        let res = JSON.parse(info.response);
+        let url = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
+        window.eventHub.emit('uploadImg',url)
+      })
+    } ,
+    packageQiniu(select,before,callback){
       let uploader = Qiniu.uploader({
         disable_statistics_report: false, // 禁止自动发送上传统计信息到七牛，默认允许发送
         runtimes: 'html5', // 上传模式,依次退化
-        browse_button: this.view.find('#uploadBtn'), // 上传选择的点选按钮，**必需**
+        browse_button: this.view.find(select)[0], // 上传选择的点选按钮，**必需**
         // 在初始化时，uptoken, uptoken_url, uptoken_func 三个参数中必须有一个被设置
         // 切如果提供了多个，其优先级为 uptoken > uptoken_url > uptoken_func
         // 其中 uptoken 是直接提供上传凭证，uptoken_url 是提供了获取上传凭证的地址，如果需要定制获取 uptoken 的过程则可以设置 uptoken_func
@@ -38,12 +65,12 @@
         //unique_names: false,              // 默认 false，key 为文件名。若开启该选项，JS-SDK 会为每个文件自动生成key（文件名）
         //  save_key: true,                  // 默认 false。若在服务端生成 uptoken 的上传策略中指定了 `save_key`，则开启，SDK在前端将不对key进行任何处理
         domain: 'pc5zw9rcj.bkt.clouddn.com', // bucket 域名，下载资源时用到，如：'http://xxx.bkt.clouddn.com/' **必需**
-        container: this.view.find('#uploadBox'), // 上传区域 DOM ID，默认是 browser_button 的父元素，
+        container: this.view.find(select).parent()[0], // 上传区域 DOM ID，默认是 browser_button 的父元素，
         max_file_size: '15mb', // 最大文件体积限制
         // flash_swf_url: 'path/of/plupload/Moxie.swf',  //引入 flash,相对路径
         max_retries: 3, // 上传失败最大重试次数
         dragdrop: true, // 开启可拖曳上传
-        drop_element: this.view.find('#uploadBox'), // 拖曳上传区域元素的 ID，拖曳文件或文件夹后可触发上传
+        drop_element: this.view.find(select).parent()[0], // 拖曳上传区域元素的 ID，拖曳文件或文件夹后可触发上传
         chunk_size: '4mb', // 分块上传时，每块的体积
         auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传,
         //x_lets : {
@@ -67,12 +94,11 @@
           },
           'BeforeUpload': (up, file) =>{
             // 每个文件上传前,处理相关的事情
-            window.eventHub.emit('loading');    
+            before(up,file);
             
           },
           'UploadProgress': function (up, file) {
             // 每个文件上传时,处理相关的事情
-            
           },
           'FileUploaded':  (up, file, info) => {
             // 每个文件上传成功后,处理相关的事情
@@ -82,14 +108,7 @@
             //    "key": "gogopher.jpg"
             //  }
             // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
-
-            window.eventHub.emit('loadinged');
-            
-            let domain = up.getOption('domain');
-            let res = JSON.parse(info.response);
-            let name = res.key;
-            let url = 'http://'+domain + '/' + encodeURIComponent(res.key); //获取上传成功后的文件的Url
-            window.eventHub.emit('upload',{name,url})
+            callback(up,file,info);
           },
           'Error': function (up, err, errTip) {
             //上传出错时,处理相关的事情

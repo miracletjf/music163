@@ -78,7 +78,6 @@
     bindEventHubs(){
       window.eventHub.on('startPlay',()=>{
         $(this.view.audio).on('canplay',()=>{
-          console.log(1);
           this.view.play();
           this.model.data.status = 'playing';
           this.view.$songContent.addClass('active');
