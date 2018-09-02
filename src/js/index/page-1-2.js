@@ -19,10 +19,8 @@
       let songsHtml = songs.reduce((str,song)=>{
         let template = this.template;
         props.map(item=>{
-          console.log(item,song[item]);
           template = template.replace(`{{${item}}}`,song[item]);
         });
-        console.log(template);
         return str + template;
       },'');
 
