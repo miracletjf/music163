@@ -22,11 +22,17 @@
         </label>
       </div>
       <div class="row-box">
-      <label>
-        <span class="name">图片</span>
-        <input name="imgUrl" type="text" class="ipt" value="--imgUrl--">
-      </label>
-    </div>
+        <label>
+          <span class="name">图片</span>
+          <input name="imgUrl" type="text" class="ipt" value="--imgUrl--">
+        </label>
+      </div>
+      <div class="row-box">
+        <label>
+          <span class="name">歌词</span>
+          <textarea name="lyric" cols="30" rows="10">--lyric--</textarea>
+        </label>
+      </div>
       <div class="row-box">
         <div class="btn-box"> 
           <button>确认</button>
@@ -34,7 +40,7 @@
       </div>
     </form> `,
     render(data = {}){
-      let placeholders = ['name','author','url','id','imgUrl'];
+      let placeholders = ['name','author','url','id','imgUrl','lyric'];
       let html = this.template;
       placeholders.map(item=>{
         html = html.replace(`--${item}--`,data[item] || '');
@@ -58,12 +64,12 @@
   }
 
   let model = {
-    data: {id:'',name:'',author:'',url:'',imgUrl:''},
+    data: {id:'',name:'',author:'',url:'',imgUrl:'',lyric:''},
     create(data){
-      let {name,author,url,imgUrl} = data;
+      let {name,author,url,imgUrl,lyric} = data;
       let Song = AV.Object.extend('Song');
       let song = new Song();
-      return song.save({name,author,url,imgUrl}).then(object=>{
+      return song.save({name,author,url,imgUrl,lyric}).then(object=>{
         let {id,attributes} = object;
         Object.assign(this.data, {id,...attributes});
       })
@@ -72,14 +78,14 @@
         // 第一个参数是 className，第二个参数是 objectId
         var song = AV.Object.createWithoutData('Song', data.id);
         // 修改属性
-        ('name author url imgUrl').split(' ').map(item=>{
+        ('name author url imgUrl lyric').split(' ').map(item=>{
           song.set(item,data[item]);
         });
         // 保存到云端
         return song.save();
     },
     resetData(){
-      this.data = {id:'',name:'',author:'',url:'',imgUrl:''};
+      this.data = {id:'',name:'',author:'',url:'',imgUrl:'',lyric:''};
     }
   }
 
@@ -94,7 +100,7 @@
     bindEvents(){
       $(this.view.el).on('submit','form',(e)=>{
         e.preventDefault();
-        let names = ('name author url imgUrl').split(' ');
+        let names = ('name author url imgUrl lyric').split(' ');
         let data = {};
         names.map(name=>{
           data[name] = $(this.view.el).find(`[name="${name}"]`).val();
