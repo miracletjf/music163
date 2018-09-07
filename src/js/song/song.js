@@ -67,7 +67,7 @@
     showLyric(index){
       console.log(index);
       let $nowLyric = this.$lyric.find(`[lyric="${index}"]`);
-      let lineHeight = $nowLyric.height();
+      let lineHeight = $nowLyric.outerHeight();
       console.log(lineHeight);
       $nowLyric.addClass('active').siblings().removeClass('active');
       this.$lyric.css({'transform': `translateY(-${ (index-1) * lineHeight}px)`})
