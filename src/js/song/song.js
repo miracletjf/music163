@@ -19,13 +19,15 @@
       this.$author = this.$el.find('#songAuthor');
       this.$bgBox = this.$el.find('#bgBox');
       this.$lyric = this.$el.find('#lyric');
+      this.$img = this.$el.find('#songImg');
     },
     render(data){
-      let props = data.props;
       let song = data.song;
       this.audio.src = song.url;
       this.$name.text(song.name);
       this.$author.text(song.author);
+      this.$img[0].src = song.imgUrl;
+      this.$bgBox.css({'background-image':`url('${song.imgUrl}')`});
       window.eventHub.emit('startPlay');
     },
     play(){
@@ -33,14 +35,49 @@
     },
     pause(){
       this.audio.pause();
+    },
+    renderLyric(lyric){
+      let lyricHtml = '';
+      let lyricObj = {};
+      let strArr = lyric.split('\n').map((item,index)=>{
+        // [00:00.00] xxxxx -> [00:00.00 , xxxxx
+        let lyricLineArr = item.split(']');
+        // [00:00.00 , xxxxx - > [00:00.00 return xxxxx
+        let lyricText = lyricLineArr.pop();
+        // [00:00.00, [00:11.00 ... -> 0,11
+        let timeArr = lyricLineArr.map(timeItem=>{
+          // [00:00.00 -> 00,00.00
+          let timeItemArr =  timeItem.substring(1).split(':');
+          //00,00.00 -> 0
+          let timeKey = (timeItemArr[0]*60 - -timeItemArr[1]).toFixed(2);
+
+          lyricObj[timeKey] = index;
+
+          return timeKey;
+        })
+
+        lyricHtml += `<p lyric="${index}">${lyricText}</p>`;
+        return lyricText;
+      })
+
+      this.$lyric.html(lyricHtml);
+
+      return lyricObj;
+    },
+    showLyric(index){
+      console.log(index);
+      let $nowLyric = this.$lyric.find(`[lyric="${index}"]`);
+      let lineHeight = $nowLyric.height();
+      console.log(lineHeight);
+      $nowLyric.addClass('active').siblings().removeClass('active');
+      this.$lyric.css({'transform': `translateY(-${ (index-1) * lineHeight}px)`})
     }
 
   }
 
   let model = {
     data:{
-      status: 'ready',
-      props: ['id','name','author','url']
+      status: 'ready'
     },
     setId(id){
       this.data.id = id; 
@@ -74,6 +111,20 @@
           window.eventHub.emit('play');
         }
       })
+      this.view.audio.ontimeupdate = (event)=>{
+        let currentTime = (event.timeStamp/1000).toFixed(2);
+        let lyricObj = this.model.data.lyricObj;
+        let keyArr = Object.keys(lyricObj).sort((a,b)=>{
+          return a - b ;
+        });
+        
+
+        keyArr.map((key,index)=>{
+          if( (currentTime - key) > 0 && ((currentTime - keyArr[index+1]) < 0 || index === keyArr.length)){
+            this.view.showLyric(lyricObj[key]);
+          }
+        })
+      }
     } ,
     bindEventHubs(){
       window.eventHub.on('startPlay',()=>{
@@ -104,6 +155,7 @@
     getSong(){
       return this.model.fetch().then(()=>{
         this.view.render(this.model.data);
+        this.model.data.lyricObj = this.view.renderLyric(this.model.data.song.lyric);
       });
     }
   }

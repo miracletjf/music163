@@ -194,6 +194,11 @@ body {
 }
 .page.song .content .decription .lyric {
   margin: 0.15rem 1.5rem 0;
+  height: 4.8rem;
+  overflow: hidden;
+}
+.page.song .content .decription .lyric .lines {
+  transition: all 0.4s ease;
 }
 .page.song .content .decription .lyric .lines p {
   padding: 0.25rem 0;
