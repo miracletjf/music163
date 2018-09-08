@@ -37,6 +37,7 @@
       this.audio.pause();
     },
     renderLyric(lyric){
+      console.log(lyric);
       let lyricHtml = '';
       let lyricObj = {};
       let strArr = lyric.split('\n').map((item,index)=>{
@@ -65,12 +66,11 @@
       return lyricObj;
     },
     showLyric(index){
-      console.log(index);
       let $nowLyric = this.$lyric.find(`[lyric="${index}"]`);
       let lineHeight = $nowLyric.outerHeight();
-      console.log(lineHeight);
       $nowLyric.addClass('active').siblings().removeClass('active');
-      this.$lyric.css({'transform': `translateY(-${ (index-1) * lineHeight}px)`})
+      console.log(index,$nowLyric.text());
+      this.$lyric.css({'transform': `translateY(-${ (index - 1) * lineHeight}px)`})
     }
 
   }
@@ -120,7 +120,7 @@
         
 
         keyArr.map((key,index)=>{
-          if( (currentTime - key) > 0 && ((currentTime - keyArr[index+1]) < 0 || index === keyArr.length)){
+          if( (currentTime - key) > 0 && ((currentTime - keyArr[index+1]) < 0 || index === keyArr.length - 1)){
             this.view.showLyric(lyricObj[key]);
           }
         })
