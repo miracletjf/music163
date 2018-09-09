@@ -12,7 +12,7 @@
   <div class="page song" id="songPage">
     <div class="bg-wrap"><div class="bg-box" id="bgBox"></div></div>
     <div class="content" id="songContent">
-      <audio src="#"></audio>
+      <audio src="#" id="abcd"></audio>
       <section class="disc">
         <span class="icon-play"></span>
         <div class="disc-circle">
@@ -40,6 +40,43 @@
     </footer>
   </div>
 
+  <script src="../vendors/vconsole.min.js"></script>
+
+  <!-- <script>
+    var vconsole = new VConsole();
+  </script> -->
+
+  <script>
+    window.onerror = function(error,file,row){
+      alert(`error: ${error}\nfile:${file}\nrow:${row}`);
+    }
+  </script>
+
+  <!-- 第一步：首先加载一个微信JS-SDK -->
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+  <!-- <script>
+    var audio = (function(){
+  var _audio = new Audio();
+  _audio.src = 'http://pc5zw9rcj.bkt.clouddn.com/%E4%B8%BD%E6%B1%9F%E5%B0%8F%E5%80%A9%20-%20%E4%B8%80%E7%9E%AC%E9%97%B4.mp3';
+  _audio.load();
+  return _audio;
+})()
+
+document.addEventListener("WeixinJSBridgeReady", function () {
+  WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+    // 触发一下play事件
+    console.log(1,audio.readyState);
+    audio.play();
+    audio.oncanplay = ()=>{
+      
+      console.log(audio.readyState);
+    }
+  });
+}, false);
+  </script> -->
+
+  
   <script src="//at.alicdn.com/t/font_813065_hafywqr3srk.js"></script>
   <script src="../vendors/jquery.min.js"></script>
   <script src="../vendors/av.min.js"></script>
@@ -47,6 +84,6 @@
   <script src="js/event-hub.js"></script>
   <script src="js/song/song.js"></script>
 
-
 </body>
 </html>
+

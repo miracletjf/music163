@@ -13,7 +13,7 @@
     </div>`,
     init(){
       this.$el = $(this.el);
-      this.audio = this.$el.find('audio')[0];
+      // this.audio = this.$el.find('audio')[0];
       this.$songContent = this.$el.find('#songContent');
       this.$name = this.$el.find('#songName');
       this.$author = this.$el.find('#songAuthor');
@@ -23,6 +23,7 @@
     },
     render(data){
       let song = data.song;
+      this.audio = new Audio();
       this.audio.src = song.url;
       this.$name.text(song.name);
       this.$author.text(song.author);
@@ -69,7 +70,6 @@
       let $nowLyric = this.$lyric.find(`[lyric="${index}"]`);
       let lineHeight = $nowLyric.outerHeight();
       $nowLyric.addClass('active').siblings().removeClass('active');
-      console.log(index,$nowLyric.text());
       this.$lyric.css({'transform': `translateY(-${ (index - 1) * lineHeight}px)`})
     }
 
@@ -104,35 +104,53 @@
       this.bindEventHubs();
     },
     bindEvents(){
-      this.view.$songContent.on('click',e=>{
+      this.view.$songContent.on('touchstart',e=>{
         if(this.model.data.status === 'playing'){
           window.eventHub.emit('pause');
         }else {
           window.eventHub.emit('play');
         }
       })
-      this.view.audio.ontimeupdate = (event)=>{
-        let currentTime = (event.timeStamp/1000).toFixed(2);
+      $(this.view.audio).on('timeupdate', (event)=>{
+        let currentTime = (event.currentTarget.currentTime).toFixed(2);
         let lyricObj = this.model.data.lyricObj;
         let keyArr = Object.keys(lyricObj).sort((a,b)=>{
           return a - b ;
         });
         
-
         keyArr.map((key,index)=>{
           if( (currentTime - key) > 0 && ((currentTime - keyArr[index+1]) < 0 || index === keyArr.length - 1)){
             this.view.showLyric(lyricObj[key]);
           }
         })
-      }
+      })
     } ,
     bindEventHubs(){
       window.eventHub.on('startPlay',()=>{
-        $(this.view.audio).on('canplay',()=>{
-          this.view.play();
+        
+        this.view.audio.load();
+        
+
+        if (typeof WeixinJSBridge === "object" && typeof WeixinJSBridge.invoke == "function") {
+          document.addEventListener('WeixinJSBridgeReady',()=>{  
+            WeixinJSBridge.invoke('getNetworkType', {}, (e) => {
+              // 触发一下play事件
+              this.view.audio.play();
+            });
+          },false);
+        } else {
+          this.view.audio.play();            
+          console.log(this.model.data.status);
+        }
+
+        this.audio.oncanPlay = ()=>{
+          console.log('can');
+          console.log(this.audio.readyState);
           this.model.data.status = 'playing';
+          
           this.view.$songContent.addClass('active');
-        })
+        };
+        
       })
       window.eventHub.on('pause',()=>{
         if(this.model.data.status === 'ready') return;

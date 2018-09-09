@@ -137,6 +137,7 @@ body {
   height: 100%;
   animation: circling 18s linear infinite;
   animation-play-state: paused;
+  -webkit-animation-play-state: paused;
 }
 .page.song .content .disc .disc-circle::before {
   content: '';
