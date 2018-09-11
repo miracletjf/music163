@@ -137,13 +137,11 @@
         if(this.model.data.status === 'ready') return;
         this.view.pause();
         this.model.data.status = 'pause';
-        this.view.$songContent.removeClass('active');
       })
       window.eventHub.on('play',()=>{
         if(this.model.data.status === 'ready') return;
         this.view.play();
         this.model.data.status = 'playing';
-        this.view.$songContent.addClass('active');
       })
     },
     getSongId(){
