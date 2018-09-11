@@ -13,7 +13,7 @@
     </div>`,
     init(){
       this.$el = $(this.el);
-      // this.audio = this.$el.find('audio')[0];
+      this.audio = this.$el.find('audio')[0];
       this.$songContent = this.$el.find('#songContent');
       this.$name = this.$el.find('#songName');
       this.$author = this.$el.find('#songAuthor');
@@ -23,13 +23,13 @@
     },
     render(data){
       let song = data.song;
-      this.audio = new Audio();
-      this.audio.src = song.url;
       this.$name.text(song.name);
       this.$author.text(song.author);
+      this.audio.src = song.url;
       this.$img[0].src = song.imgUrl;
       this.$bgBox.css({'background-image':`url('${song.imgUrl}')`});
       window.eventHub.emit('startPlay');
+      
     },
     play(){
       this.audio.play();
@@ -99,11 +99,12 @@
       this.view = view;
       this.view.init();
       this.getSongId();
-      this.getSong();
       this.bindEvents();
       this.bindEventHubs();
+      this.getSong();
     },
     bindEvents(){
+
       this.view.$songContent.on('touchstart',e=>{
         if(this.model.data.status === 'playing'){
           window.eventHub.emit('pause');
@@ -127,31 +128,11 @@
     } ,
     bindEventHubs(){
       window.eventHub.on('startPlay',()=>{
-        
-        this.view.audio.load();
-        
-
-        if (typeof WeixinJSBridge === "object" && typeof WeixinJSBridge.invoke == "function") {
-          document.addEventListener('WeixinJSBridgeReady',()=>{  
-            WeixinJSBridge.invoke('getNetworkType', {}, (e) => {
-              // 触发一下play事件
-              this.view.audio.play();
-            });
-          },false);
-        } else {
-          this.view.audio.play();            
-          console.log(this.model.data.status);
-        }
-
-        this.audio.oncanPlay = ()=>{
-          console.log('can');
-          console.log(this.audio.readyState);
-          this.model.data.status = 'playing';
-          
-          this.view.$songContent.addClass('active');
-        };
-        
+        this.model.data.status = 'start';
+        this.view.audio.play();
+        this.view.audio.pause();
       })
+
       window.eventHub.on('pause',()=>{
         if(this.model.data.status === 'ready') return;
         this.view.pause();
@@ -171,10 +152,54 @@
       this.model.setId(songId);
     },
     getSong(){
+      
       return this.model.fetch().then(()=>{
         this.view.render(this.model.data);
         this.model.data.lyricObj = this.view.renderLyric(this.model.data.song.lyric);
+
+        
       });
+      
+    },
+    pll(callback){
+      callback();
+    },
+    ttt(){
+      let timer;
+      timer = setInterval(()=>{
+        console.log(222);
+        if(this.model.data.song){
+          console.log('aaaa');
+          var audio = (function(){
+            var _audio = new Audio();
+            _audio.src = 'http://pc5zw9rcj.bkt.clouddn.com/%E4%B8%BD%E6%B1%9F%E5%B0%8F%E5%80%A9%20-%20%E4%B8%80%E7%9E%AC%E9%97%B4.mp3';
+            _audio.load();
+            return _audio;
+          })()
+          console.log('audio');
+          document.addEventListener('touchstart',()=>{
+            console.log('tttt')
+          });
+          document.addEventListener("WeixinJSBridgeReady", function () {
+            console.log('audio3')
+            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+            console.log('audio4')
+              
+              // 触发一下play事件
+              console.log(1,audio.readyState);
+              audio.play();
+              audio.oncanplay = ()=>{
+                
+                console.log(audio.readyState);
+              }
+            });
+          }, false);
+          console.log('audio2')
+          
+          
+          clearInterval(timer);
+        }
+      },100)
     }
   }
 
