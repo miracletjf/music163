@@ -26,9 +26,7 @@
       })
       window.eventHub.on('pause',()=>{
         let transformStyle = getComputedStyle(this.view.$discCircle[0]).transform;
-        console.log(transformStyle);
         this.view.$el.removeClass('animate');
-        console.log(this.model.data.lastTransform === '' ? transformStyle:transformStyle.concat(' ',this.model.data.lastTransform));
         this.view.$el.css({'transform': this.model.data.lastTransform === '' ? transformStyle:transformStyle.concat(' ',this.model.data.lastTransform)});
         this.model.data.lastTransform = getComputedStyle(this.view.$el[0]).transform;
       })

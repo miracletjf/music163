@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>歌单页</title>
+  <link rel="stylesheet" href="css/playLists.css">
+  <link rel="stylesheet" href="css/loading.css">
+  <script src="../vendors/av.min.js"></script>
+  <script src="../node_modules/plupload/js/moxie.min.js"></script>
+  <script src="../vendors/plupload.min.js"></script>
+  <script src="../vendors/qiniu.min.js"></script>
+</head>
+<body>
+  <div class="site-loading" id="loading_box"></div>
+  <div class="page">
+    <aside>
+      <div class="new-playList"></div>
+      <div class="playList-list-container" id="playList_list"></div>
+      <div class="upload-playList">
+        <div class="upload-wrap">
+          <div class="upload-box" id="uploadImgBtn">
+            点击上传图片<br>
+            或将文件拖拽到此上传
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main id="playLists_form"></main>
+  </div>
+
+  <script src="../vendors/jquery.min.js"></script>
+  <script src="js/av.js"></script>
+  <script src="js/event-hub.js"></script>
+  <script src="js/admin/loading.js"></script>
+  <script src="js/playLists/new-playList.js"></script>
+  <script src="js/playLists/playList-list.js"></script>
+  <script src="js/playLists/playList-form.js"></script>
+
+</body>
+</html>

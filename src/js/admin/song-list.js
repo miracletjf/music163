@@ -1,7 +1,7 @@
 {
   let view = {
     el: '.songList-container',
-    template: ` <ul class="songList"></ul>`,
+    template: `<ul class="songList"></ul>`,
     render(data){
       let ul = $(this.template);
       let {songList} = data;
