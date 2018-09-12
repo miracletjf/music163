@@ -34,7 +34,7 @@
       let placeholders = data.placeholders;
       let html = this.template;
       
-      placeholder.map(item=>{
+      placeholders.map(item=>{
         html = html.replace(`--${item}--`,data.playList[item] || '');
       })
 
@@ -50,7 +50,7 @@
       playList: {}
     },
     create(){
-      let {name,imgUrl,description} = this.model.data.playList;
+      let {name,imgUrl,description} = this.data.playList;
       let PlayList = AV.Object.extend('PlayList');
       let playList = new PlayList();
       return playList.save({name,imgUrl,description}).then(object=>{
@@ -69,16 +69,18 @@
       this.model = model;
       this.view.init();
       this.view.render(this.model.data);
+      this.bindEvents();
     },
     bindEvents(){
       this.view.$el.on('submit','form',e =>{
         e.preventDefault();
         let playList = {}
-        this.model.placeholders.map(item=>{
-          playList[item] = this.$el.find(`[name='${item}']`).val();
+        this.model.data.placeholders.map(item=>{
+          playList[item] = this.view.$el.find(`[name='${item}']`).val();
         })
 
         Object.assign(this.model.data.playList, playList);
+
 
         this.createData();
       })
@@ -86,6 +88,7 @@
     createData(){
       return this.model.create().then(()=>{
         let playList = JSON.parse(JSON.stringify(this.model.data.playList));
+        console.log(playList);
         window.eventHub.emit('saveData',playList);
         this.view.reset();
         this.model.resetData();

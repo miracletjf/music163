@@ -1,20 +1,20 @@
 {
   let view = {
     el: '#playList_list',
-    template: `<ul class="playList-list">
-      <li>歌单1</li>
-      <li>歌单2</li>
-      <li>歌单3</li>
-      <li>歌单4</li>
-    </ul>`,
+    template: `<ul class="playList-list"> </ul>`,
     init(){
       this.$el = $(this.el);
     },
     render(data){
+      console.log(2222);
       let playLists = data.playLists;
+      let html = ''
+      console.log(playLists);
       playLists.map(playList=>{
-        this.$el.append(this.template);
+        html += `<li data-play-list-id="${ playList['id'] }">${ playList['name'] }</li>`;
       })
+      
+      $(this.template).appendTo(this.$el).append(html);
     }
   }
 
@@ -29,12 +29,14 @@
       this.view = view;
       this.model = model;
       this.view.init();
-      this.view.render();
+      this.view.render(this.model.data);
+      this.bindEnentHubs();
     },
-    bindEnents(){
-      window.evnetHub.on('saveData',playList=>{
+    bindEnentHubs(){
+      window.eventHub.on('saveData',playList=>{
+        console.log('-----',playList);
         this.model.data.playLists.push(playList);
-        thie.view.render(this.model.data);
+        this.view.render(this.model.data);
       })
     }
   }
