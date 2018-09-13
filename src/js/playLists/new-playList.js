@@ -7,6 +7,12 @@
     },
     render(){
       this.$el.html(this.template);
+    },
+    active(){
+      this.$el.addClass('active');
+    },
+    unActive(){
+      this.$el.removeClass('active');
     }
   }
 
@@ -18,6 +24,14 @@
       this.model = model;
       this.view.init();
       this.view.render();
+      bindEvents();
+    },
+    bindEvents(){
+      this.view.$el.on('click',e=>{
+        this.view.active();
+        // 暂停处：2018年9月14日01:17:36
+        window.eventHub('new-playList')
+      })
     }
   }
 
