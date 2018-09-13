@@ -39,6 +39,9 @@
       })
 
       this.$el.html(html);
+    },
+    reset(placeholders){
+      this.render({placeholders,playList:{}})
     }
 
   
@@ -70,6 +73,7 @@
       this.view.init();
       this.view.render(this.model.data);
       this.bindEvents();
+      this.bindEventHubs();
     },
     bindEvents(){
       this.view.$el.on('submit','form',e =>{
@@ -81,8 +85,12 @@
 
         Object.assign(this.model.data.playList, playList);
 
-
         this.createData();
+      })
+    },
+    bindEventHubs(){
+      window.eventHub.on('uploadImg',url=>{
+        this.view.$el.find('[name="imgUrl"]').val(url);
       })
     },
     createData(){
@@ -90,8 +98,8 @@
         let playList = JSON.parse(JSON.stringify(this.model.data.playList));
         console.log(playList);
         window.eventHub.emit('saveData',playList);
-        this.view.reset();
         this.model.resetData();
+        this.view.reset(this.model.data.placeholders);
       })
     }
   }

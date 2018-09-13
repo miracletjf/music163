@@ -27,7 +27,7 @@
       songList: []
     },
     fetchSongs(){
-      var query = new AV.Query('Song');
+      let query = new AV.Query('Song');
       // 批量获取
       return query.find().then(songs=>{
         this.data.songList = songs.map(song=>{
