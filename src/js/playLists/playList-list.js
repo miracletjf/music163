@@ -6,7 +6,6 @@
       this.$el = $(this.el);
     },
     render(data){
-      console.log(2222);
       let playLists = data.playLists;
       let html = playLists.reduce((str,playList)=>{
         str += `<li data-play-list-id="${ playList['id'] }">${ playList['name'] }</li>`;
@@ -40,16 +39,28 @@
       this.view = view;
       this.model = model;
       this.view.init();
+      this.bindEventHubs();
       this.model.fetchLists().then(()=>{
         this.view.render(this.model.data);
+        this.bindEvents();
       })
-      this.bindEnentHubs();
     },
-    bindEnentHubs(){
+    bindEventHubs(){
       window.eventHub.on('saveData',playList=>{
         console.log('-----',playList);
         this.model.data.playLists.push(playList);
         this.view.appendPlayList(playList);
+      })
+      window.eventHub.on('newPlayList',()=>{
+        this.view.$el.find('li').removeClass('active');
+      })
+    },
+    bindEvents(){
+      this.view.$el.find('li').on('click',e=>{
+        let $this = $(e.currentTarget);
+        let currentId = $this.attr('data-play-list-id');
+        $this.addClass('active').siblings().removeClass('active');
+        window.eventHub.emit('selectList',currentId);
       })
     }
   }

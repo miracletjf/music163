@@ -2,7 +2,7 @@
   let view = {
     el: '#playLists_form',
     template: `<form action="">
-    <div class="text-title"> 新建歌曲 </div>
+        <div class="text-title"> 新建歌曲 </div>
         <div class="row-box">
           <label>
             <span class="name">名称</span>
@@ -43,8 +43,6 @@
     reset(placeholders){
       this.render({placeholders,playList:{}})
     }
-
-  
   }
 
   let model = {
@@ -84,13 +82,26 @@
         })
 
         Object.assign(this.model.data.playList, playList);
-
-        this.createData();
+        if(this.model.data.playList.id){
+          this.modifiedData();
+        }else {
+          this.createData();
+        }
       })
+
     },
     bindEventHubs(){
       window.eventHub.on('uploadImg',url=>{
         this.view.$el.find('[name="imgUrl"]').val(url);
+      })
+      window.eventHub.on('newPlayList',()=>{
+        if(this.model.data.playList.id){
+          this.model.resetData();
+          this.view.reset(this.model.data.placeholders);
+        }
+      })
+      window.eventHub.on('selectList',id=>{
+        this.view.$el.find('.text-title').html('编辑歌曲');
       })
     },
     createData(){
