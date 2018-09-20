@@ -59,6 +59,17 @@
         Object.assign(this.data.playList, {id,...attributes});
       })
     },
+    modefied(){
+      console.log(this.data.playList.id);
+      // 第一个参数是 className，第二个参数是 objectId
+      let todo = AV.Object.createWithoutData('PlayList', this.data.playList.id);
+      this.data.placeholders.map(pl=>{
+        // 修改属性
+        todo.set(pl, this.data.playList[pl]);
+      })
+      // 保存到云端
+      return todo.save();
+    },
     resetData(){
       this.data.playList = {id:'',name:'',imgUrl:'',description:''}
     }
@@ -99,16 +110,25 @@
           this.model.resetData();
           this.view.reset(this.model.data.placeholders);
         }
+        this.view.$el.find('.text-title').html('新建歌曲');
       })
-      window.eventHub.on('selectList',id=>{
+      window.eventHub.on('selectList',data=>{
+        this.model.data.playList = data;
+        this.view.render(this.model.data);
         this.view.$el.find('.text-title').html('编辑歌曲');
       })
     },
     createData(){
       return this.model.create().then(()=>{
         let playList = JSON.parse(JSON.stringify(this.model.data.playList));
-        console.log(playList);
         window.eventHub.emit('saveData',playList);
+        this.model.resetData();
+        this.view.reset(this.model.data.placeholders);
+      })
+    },
+    modifiedData(){
+      return this.model.modefied().then(()=>{
+        window.eventHub.emit('modifiedData',this.model.data.playList);
         this.model.resetData();
         this.view.reset(this.model.data.placeholders);
       })

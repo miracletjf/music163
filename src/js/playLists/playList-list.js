@@ -54,13 +54,26 @@
       window.eventHub.on('newPlayList',()=>{
         this.view.$el.find('li').removeClass('active');
       })
+      window.eventHub.on('modifiedData',data=>{
+        this.model.data.playLists.map((playList,index)=>{
+          if(playList.id === data.id){
+            this.model.data.playLists[index] = data;
+            this.view.$el.find('li').eq(index).text(data.name).removeClass('active');                     
+          }
+        })
+      })
     },
     bindEvents(){
-      this.view.$el.find('li').on('click',e=>{
+      this.view.$el.on('click','li',e=>{
         let $this = $(e.currentTarget);
+        let playLists = this.model.data.playLists;
         let currentId = $this.attr('data-play-list-id');
         $this.addClass('active').siblings().removeClass('active');
-        window.eventHub.emit('selectList',currentId);
+        playLists.map(playList => {
+          if(playList.id === currentId){
+            window.eventHub.emit('selectList',playList);
+          }
+        })
       })
     }
   }

@@ -30,14 +30,15 @@
     bindEvents(){
       this.view.$el.on('click',e=>{
         this.view.active();
-        // 暂停处：2018年9月14日01:17:36
-        // 开始：2018年9月19日21:03:36
         window.eventHub.emit('newPlayList');
       })
     },
     bindEventHubs(){
       window.eventHub.on('selectList',id=>{
         this.view.unActive();
+      })
+      window.eventHub.on('modifiedData',data=>{
+        this.view.active();
       })
     }
   }
