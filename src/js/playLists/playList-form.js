@@ -2,7 +2,7 @@
   let view = {
     el: '#playLists_form',
     template: `<form action="">
-        <div class="text-title"> 新建歌曲 </div>
+        <div class="text-title"> 新建歌单 </div>
         <div class="row-box">
           <label>
             <span class="name">名称</span>
@@ -110,12 +110,12 @@
           this.model.resetData();
           this.view.reset(this.model.data.placeholders);
         }
-        this.view.$el.find('.text-title').html('新建歌曲');
+        this.view.$el.find('.text-title').html('新建歌单');
       })
       window.eventHub.on('selectList',data=>{
         this.model.data.playList = data;
         this.view.render(this.model.data);
-        this.view.$el.find('.text-title').html('编辑歌曲');
+        this.view.$el.find('.text-title').html('编辑歌单');
       })
     },
     createData(){

@@ -1,7 +1,7 @@
 {
   let view = {
     el: '.new-playList',
-    template: `新建歌曲`,
+    template: `新建歌单`,
     init(){
       this.$el = $(this.el);
     },
