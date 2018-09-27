@@ -59,10 +59,10 @@
       }else {
         $(this.el).find('form').prepend('<div class="text-title"> 新建歌曲 </div>')
       }
-      let options = ''
+      let options = '<option>请选择</option>';
       playlists.map(option=>{
         options += `<option value="${option.id}">${option.name}</option>`
-      })
+      });
       $(this.el).find('#depend').append(options);
     },
     reset(data){
@@ -130,6 +130,9 @@
       this.bindEventHubs();
     },
     bindEvents(){
+      $(this.view.el).on('change','#depend',e=>{
+        console.log($(e.currentTarget).val());
+      })
       $(this.view.el).on('submit','form',(e)=>{
         e.preventDefault();
         let names = ('name author url imgUrl lyric depend').split(' ');
@@ -137,6 +140,9 @@
         names.map(name=>{
           song[name] = $(this.view.el).find(`[name="${name}"]`).val();
         })
+
+        let $selectEle = $(this.view.el).find('#depend');
+        song.depend = $selectEle.val() != '请选择' ? $selectEle.val() : '';
         
         Object.assign(this.model.data.song,song);
         
