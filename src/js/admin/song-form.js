@@ -47,7 +47,7 @@
     </form> `,
     render(data){
       let song = data.song ||{};
-      let playlists = data.playLists;
+      let playLists = data.playLists;
       let placeholders = ['name','author','url','id','imgUrl','lyric','depend'];
       let html = this.template;
       placeholders.map(item=>{
@@ -59,14 +59,24 @@
       }else {
         $(this.el).find('form').prepend('<div class="text-title"> 新建歌曲 </div>')
       }
-      let options = '<option>请选择</option>';
-      playlists.map(option=>{
-        options += `<option value="${option.id}">${option.name}</option>`
+      this.renderOptions(playLists,song.depend);
+      
+    },
+    renderOptions(playLists,depend){
+      let optionsHtml = '<option>请选择</option>';
+      playLists.map(option=>{
+        optionsHtml += `<option value="${option.id}">${option.name}</option>`
       });
-      $(this.el).find('#depend').append(options);
+
+      $(this.el).find('#depend').append(optionsHtml);
+            
+      if(depend){
+        $(this.el).find(`#depend option[value="${depend}"]`).prop('selected',true);
+      }
+      return optionsHtml;
     },
     reset(data){
-      this.render({playlists:data.playLists,song:{}});
+      this.render({playLists:data.playLists});
     },
     findElements(selector){
       return $(this.el).find(selector);
@@ -101,9 +111,7 @@
         let playlist = AV.Object.createWithoutData('PlayList', data.depend);
         song.set('dependent',playlist)
         // 保存到云端
-        return song.save().then(aa=>{
-          console.log(aa);
-        });
+        return song.save();
     },
     getPlayLists(){
       let query = new AV.Query('PlayList');
