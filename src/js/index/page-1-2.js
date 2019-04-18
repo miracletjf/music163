@@ -33,7 +33,7 @@
       props: ['id','name','author','url']
     },
     featchAll(){
-      var query = new AV.Query('Song');
+      let query = new AV.Query('Song');
       return query.find().then( songs => {
         this.data.songs = songs.map(song=>{
           return {id:song.id,...song.attributes}

@@ -2,14 +2,13 @@
   let view = {
     el: '#song_form',
     template: `
-    <form action="">
+    <form action="" class="upload-form">
       <div class="row-box">
         <label>
           <span class="name">歌 名</span>
           <input name="name" type="text" class="ipt" value="--name--">
         </label>
-      </div>
-      <div class="row-box">
+
         <label>
           <span class="name">歌 手</span>
           <input name="author" type="text" class="ipt" value="--author--">
@@ -20,29 +19,27 @@
           <span class="name">歌曲外链</span>
           <input name="url" type="text" class="ipt" value="--url--">
         </label>
-      </div>
-      <div class="row-box">
+
         <label>
           <span class="name">歌单</span>
-          <select id="depend"></select>
+          <select id="depend" class="ipt"></select>
         </label>
       </div>
       <div class="row-box">
         <label>
           <span class="name">图片</span>
-          <input name="imgUrl" type="text" class="ipt" value="--imgUrl--">
+          <input name="imgUrl" type="text" class="ipt lg" value="--imgUrl--">
         </label>
       </div>
       <div class="row-box">
         <label>
           <span class="name">歌词</span>
-          <textarea name="lyric" cols="30" rows="10">--lyric--</textarea>
+          <textarea name="lyric" class="textarea lg" cols="30" rows="10">--lyric--</textarea>
         </label>
       </div>
-      <div class="row-box">
-        <div class="btn-box"> 
-          <button>确认</button>
-        </div>
+      <div class="row-box"> 
+        <div class="btn-box"> <button class="btn" type="submit">确认</button> </div> 
+        <div class="btn-box"> <button class="btn" id="remove-song">删除</button> </div> 
       </div>
     </form> `,
     render(data){
@@ -58,13 +55,15 @@
         $(this.el).find('form').prepend('<div class="text-title"> 编辑歌曲 </div>')
       }else {
         $(this.el).find('form').prepend('<div class="text-title"> 新建歌曲 </div>')
+
+        $(this.el).find('#remove-song').parent().hide();
       }
       this.renderOptions(playLists,song.depend);
       
     },
     renderOptions(playLists,depend){
       let optionsHtml = '<option>请选择</option>';
-      playLists.map(option=>{
+      playLists.map(option => {
         optionsHtml += `<option value="${option.id}">${option.name}</option>`
       });
 
@@ -95,7 +94,8 @@
       let {name,author,url,imgUrl,lyric,depend} = data;
       let Song = AV.Object.extend('Song');
       let song = new Song();
-      return song.save({name,author,url,imgUrl,lyric,depend}).then(object=>{
+
+      return song.save({name,author,url,imgUrl,lyric,depend}).then(object => {
         let {id,attributes} = object;
         Object.assign(this.data, {id,...attributes});
       })
@@ -112,6 +112,11 @@
         song.set('dependent',playlist)
         // 保存到云端
         return song.save();
+    },
+    remove(data){
+      // 第一个参数是 className，第二个参数是 objectId
+      let song = AV.Object.createWithoutData('Song', data.id);
+      return song.destroy();
     },
     getPlayLists(){
       let query = new AV.Query('PlayList');
@@ -141,6 +146,7 @@
       $(this.view.el).on('change','#depend',e=>{
         console.log($(e.currentTarget).val());
       })
+
       $(this.view.el).on('submit','form',(e)=>{
         e.preventDefault();
         let names = ('name author url imgUrl lyric depend').split(' ');
@@ -152,13 +158,22 @@
         let $selectEle = $(this.view.el).find('#depend');
         song.depend = $selectEle.val() != '请选择' ? $selectEle.val() : '';
         
+
         Object.assign(this.model.data.song,song);
         
+        console.log('onsubmit');
+        console.log(this.model.data.song);
+
         if(this.model.data.song.id){
           this.modifyData(this.model.data.song)
         }else{
           this.createData(this.model.data.song);
         }
+      })
+
+      $(this.view.el).on('click','#remove-song',e => {
+        e.preventDefault();
+        this.removeData(this.model.data.song);
       })
     },
     bindEventHubs(){
@@ -187,6 +202,10 @@
         this.model.resetData();
         this.view.reset(this.model.data);
       })
+      window.eventHub.on('removeData',()=>{
+        this.model.resetData();
+        this.view.reset(this.model.data);
+      })
     },
     createData(data){
       return this.model.create(data).then(()=>{
@@ -207,6 +226,12 @@
         window.eventHub.emit('modifyData',obj);
       })
     },
+    removeData(data){
+      return this.model.remove(data).then(()=>{
+        let obj = JSON.parse(JSON.stringify(this.model.data.song));
+        window.eventHub.emit('removeData',obj);
+      })
+    }
 
   }
 

@@ -20,6 +20,7 @@
       this.model = model;
       this.view.init();
       this.bindEventHubs();
+      this.loadModul('./js/index/page-2-1.js');
     },
     bindEvents(){ },
     bindEventHubs(){
@@ -30,6 +31,11 @@
           this.view.hide();
         }
       })
+    },
+    loadModul(src){
+      let script = document.createElement('script');
+      script.src = src;
+      document.body.appendChild(script);
     }
   }
 

@@ -22,7 +22,6 @@
       this.bindEventHubs();
       this.loadModul('./js/index/page-1-1.js');
       this.loadModul('./js/index/page-1-2.js');
-      console.log(this.view.$el.find('img').attr('src'));
     },
     bindEvents(){ },
     bindEventHubs(){

@@ -31,6 +31,20 @@ a:active {
   border: none;
   background: none;
 }
+input,
+input:focus,
+input:active,
+button,
+button:focus,
+button:active,
+textarea,
+textarea:focus,
+textarea:active,
+select,
+select:focus {
+  border: none;
+  outline: none;
+}
 ul,
 ol {
   list-style: none;
@@ -44,11 +58,28 @@ html {
 body {
   background: #fcfcfd;
 }
+body {
+  background: #313131;
+}
+* {
+  color: #fff;
+}
 .upload-box {
   padding: 10px;
+  margin-bottom: 10px;
   display: block;
-  border: dashed 2px #aaa;
   border-radius: 10px;
+  cursor: pointer;
+}
+.btn {
+  display: block;
+  padding: 5px 30px;
+  margin: 5px auto;
+  color: #fff;
+  font-size: 16px;
+  line-height: 26px;
+  border-radius: 5px;
+  background: linear-gradient(120deg, #a32b43, #f54c56);
   cursor: pointer;
 }
 .page {
@@ -58,87 +89,141 @@ body {
 .page aside {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 300px;
+  padding-right: 20px;
+  background: #272727;
+  z-index: 2;
 }
 .page main {
+  display: flex;
   flex-grow: 1;
   padding-left: 40px;
-  background: #eee;
+}
+.page main .upload-form {
+  margin: 0 auto;
+  padding: 10px 20px;
+  width: 800px;
+  align-self: center;
+  border-radius: 5px;
+  box-shadow: -1px -1px 6px rgba(0, 0, 0, 0.8);
 }
 .page main .text-title {
   margin-top: 10px;
-  margin-bottom: 18px;
-  font-size: 26px;
+  margin-bottom: 30px;
+  font-size: 30px;
   line-height: 40px;
+  text-align: center;
   font-weight: bold;
 }
 .page main .row-box {
   display: flex;
+  justify-content: center;
   margin-bottom: 10px;
+}
+.page main .row-box option {
+  color: #fff;
+  background: #313131;
+  line-height: 26px;
+}
+.page main .row-box option:hover {
+  background: #f54c56;
 }
 .page main .row-box label {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 .page main .row-box .name {
   display: block;
   width: 65px;
   text-align: right;
-  margin-right: 5px;
+  margin-right: 10px;
   font-size: 16px;
 }
-.page main .row-box .ipt {
+.page main .row-box .ipt,
+.page main .row-box .textarea {
   padding: 4px;
-  width: 200px;
-  line-height: 18px;
-  border-radius: 4px;
-  border: solid 1px #ddd;
+  width: 300px;
+  line-height: 20px;
+  height: 30px;
+  border-radius: 3px;
+  font-size: 16px;
+  border: solid 1px #a32b43;
+  background: rgba(255, 255, 255, 0.1);
+}
+.page main .row-box .ipt.lg,
+.page main .row-box .textarea.lg {
+  width: 676px;
+}
+.page main .row-box .textarea {
+  height: auto;
 }
 .page main .row-box .btn-box {
-  margin-left: 70px;
-  margin-top: 10px;
-}
-.page main .btn-box button {
-  padding: 0 16px;
-  margin-right: 10px;
-  line-height: 30px;
-  font-size: 15px;
-  border: solid 1px #ddd;
-  background: #fff;
-  border-radius: 4px;
-  cursor: pointer;
+  display: block;
+  text-align: center;
+  margin: 0 20px;
 }
 .page .new-song {
+  position: relative;
   text-align: center;
-  line-height: 40px;
-  font-size: 18px;
-  border-bottom: solid 1px #aaa;
-  cursor: pointer;
+  padding: 5px 0;
+  border-bottom: solid 1px #3f3f3f;
 }
-.page .new-song.active {
-  background: #eee;
+.page .new-song .btn {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.page .new-song::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 1px;
+  bottom: 1px;
+  width: 4px;
+  background-color: transparent;
+}
+.page .new-song.active::after {
+  background-color: #f54c56;
 }
 .page .songList-container {
   flex-grow: 1;
 }
 .page .songList-container .songList li {
+  position: relative;
   display: block;
   padding: 7px 0;
   padding-left: 20px;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
-  border-bottom: dashed 1px #aaa;
-  box-shadow: 0 1px 0 #eee;
+  border-bottom: solid 1px #3f3f3f;
+  color: #fff;
   cursor: pointer;
+}
+.page .songList-container .songList li::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 1px;
+  bottom: 1px;
+  width: 4px;
+  background-color: transparent;
 }
 .page .songList-container .songList li:hover,
 .page .songList-container .songList li.active {
-  background: #aaa;
+  color: #f54c56;
+}
+.page .songList-container .songList li:hover::after,
+.page .songList-container .songList li.active::after {
+  background-color: #f54c56;
 }
 .page .upload-song {
   font-size: 15px;
   line-height: 20px;
   text-align: center;
+}
+.page .upload-song .upload-wrap {
+  padding: 2px 0 2px 20px;
 }
 .page .upload-song button {
   font-size: inherit;

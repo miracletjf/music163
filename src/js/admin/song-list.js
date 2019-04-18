@@ -77,6 +77,14 @@
         })
         this.view.render(this.model.data)
       })
+      window.eventHub.on('removeData',data=>{    
+        let index = this.model.data.songList.findIndex(item => item.id === data.id);
+        console.log(index);
+        if(index > -1){
+          this.model.data.songList.splice(index,1);
+          this.view.render(this.model.data);
+        }
+      })
     }
   }
 

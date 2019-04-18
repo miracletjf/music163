@@ -47,20 +47,26 @@
     },
     bindEventHubs(){
       window.eventHub.on('saveData',playList=>{
-        console.log('-----',playList);
         this.model.data.playLists.push(playList);
         this.view.appendPlayList(playList);
       })
       window.eventHub.on('newPlayList',()=>{
         this.view.$el.find('li').removeClass('active');
       })
-      window.eventHub.on('modifiedData',data=>{
+      window.eventHub.on('modifiedData',data => {
         this.model.data.playLists.map((playList,index)=>{
           if(playList.id === data.id){
             this.model.data.playLists[index] = data;
             this.view.$el.find('li').eq(index).text(data.name).removeClass('active');                     
           }
         })
+      })
+      window.eventHub.on('removeData', data =>{
+        let index = this.model.data.playLists.findIndex(playList => playList.id === data.id);
+        if(index != -1){
+          this.model.data.playLists.splice(index,1)
+          this.view.$el.find('li').eq(index).remove();
+        }
       })
     },
     bindEvents(){

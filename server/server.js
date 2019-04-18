@@ -1,7 +1,7 @@
 let http = require('http');
 let fs = require('fs');
 let url = require('url');
-let qiniu = require('qiniu');
+let qiniu = require('./qiniu');
 
 let port = process.argv[2];
 
@@ -28,7 +28,6 @@ let server = http.createServer(function(request,response){
     let string = fs.readFileSync('./server/qiniu-key.json','utf-8');
     let {accessKey,secretKey} = JSON.parse(string);
     let bucket = 'music163'
-    console.log(accessKey,secretKey);
     let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
     let options = {

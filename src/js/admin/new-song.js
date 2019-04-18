@@ -1,15 +1,15 @@
 {
   let view = {
-    el: '.new-song',
+    el: '#new-song',
     template: `新建歌曲`,
     render(data){
       $(this.el).html(this.template);
     },
     active(){
-      $(this.el).addClass('active');
+      $(this.el).parent().addClass('active');
     },
     deActive(){
-      $(this.el).removeClass('active');
+      $(this.el).parent().removeClass('active');
     }
   }
 
@@ -43,6 +43,9 @@
         this.model.data = {};
       })
       window.eventHub.on('modifyData',data=>{
+        this.view.active();
+      })
+      window.eventHub.on('removeData',data=>{
         this.view.active();
       })
     },

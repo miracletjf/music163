@@ -1,10 +1,33 @@
 @import (less) 'reset';
 
+@main-color: #f54c56;
+@sub-color: #a32b43;
+@border-color: #3f3f3f;
+
+body {
+  background: #313131;
+}
+
+* {
+  color: #fff;
+}
 .upload-box {
   padding: 10px;
+  margin-bottom: 10px;
   display: block;
-  border: dashed 2px #aaa;
   border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn {
+  display: block;
+  padding: 5px 30px;
+  margin: 5px auto;
+  color: #fff;
+  font-size: 16px;
+  line-height: 26px;
+  border-radius: 5px;
+  background: linear-gradient(120deg, #a32b43, #f54c56);
   cursor: pointer;
 }
 
@@ -15,85 +38,148 @@
   aside {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 300px;
+    padding-right: 20px;
+    background: #272727;
+    z-index: 2;
   }
 
   main {
+    display: flex;
     flex-grow: 1;
     padding-left: 40px;
-    background: #eee;
+
+    .upload-form {
+      margin: 0 auto;
+      padding: 10px 20px;
+      width: 800px;
+      align-self: center;
+      // border: dashed 1px #666;
+      border-radius: 5px;
+      box-shadow: -1px -1px 6px rgba(0, 0, 0, 0.8);
+    }
+
     .text-title {
       margin-top: 10px;
-      margin-bottom: 18px;
-      font-size: 26px;
+      margin-bottom: 30px;
+      font-size: 30px;
       line-height: 40px;
+      text-align: center;
       font-weight: bold;
     }
+
+
     .row-box {
       display: flex;
+      justify-content: center;
       margin-bottom: 10px;
+
+      option {
+        color: #fff;
+        background: #313131;
+        line-height: 26px;
+      }
+
+      option:hover {
+        background: @main-color;
+      }
 
       label {
         display: flex;
-        align-items: center;
+        align-items: baseline;
       }
       .name {
         display: block;
         width: 65px;
         text-align: right;
-        margin-right: 5px;
+        margin-right: 10px;
         font-size: 16px;
       }
-      .ipt {
+      .ipt,.textarea {
         padding: 4px;
-        width: 200px;
-        line-height: 18px;
-        border-radius: 4px;
-        border: solid 1px #ddd;
+        width: 300px;
+        line-height: 20px;
+        height: 30px;
+        border-radius: 3px;
+        font-size: 16px;
+        border: solid 1px @sub-color;
+        background: rgba(255, 255, 255,.1);
+
+        &.lg {
+          width: 676px;
+        }
+      }
+      .textarea {
+        height: auto;
       }
       .btn-box {
-        margin-left: 70px;
-        margin-top: 10px;
+        display: block;
+        text-align: center;
+        margin: 0 20px;
       }
-    }
-    .btn-box button {
-      padding: 0 16px;
-      margin-right: 10px;
-      line-height: 30px;
-      font-size: 15px;
-      border: solid 1px #ddd;
-      background: #fff;
-      border-radius: 4px;
-      cursor: pointer;
     }
   }
 
   .new-playList {
+    position: relative;
     text-align: center;
-    line-height: 40px;
-    font-size: 18px;
-    border-bottom: solid 1px #aaa;
-    cursor: pointer;
-  
-    &.active {
-      background: #eee;
+    padding: 5px 0;
+    border-bottom: solid 1px @border-color;
+
+    .btn {
+      padding-left: 40px;
+      padding-right: 40px;
     }
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 1px;
+      bottom: 1px;
+      width: 4px;
+      background-color: transparent;
+    }
+
+    &.active {
+      &::after {
+        background-color: @main-color;
+      }
+    }
+
   }
 
   .playList-list-container {
     flex-grow: 1;
     .playList-list {
       li {
+        position: relative;
         display: block;
         padding: 7px 0;
         padding-left: 20px;
-        font-size: 15px;
+        font-size: 14px;
         line-height: 20px;
-        border-bottom: dashed 1px #aaa;
-        box-shadow: 0 1px 0 #eee;
+        border-bottom: solid 1px #3f3f3f;
+        color: #fff;
         cursor: pointer;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 1px;
+          bottom: 1px;
+          width: 4px;
+          background-color: transparent;
+        }
+
         &:hover,&.active {
-          background: #aaa;
+          color: @main-color;
+          &::after {
+            background-color: @main-color;
+          }
         }
       }
     }
@@ -103,6 +189,10 @@
     font-size: 15px;
     line-height: 20px;
     text-align: center;
+    .upload-wrap {
+      padding: 2px 0 2px 20px;
+    }
+
     button {
       font-size: inherit;
       border: none;
@@ -114,5 +204,4 @@
       }
     }
   }
-
 }

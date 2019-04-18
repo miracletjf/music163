@@ -158,46 +158,6 @@
         
       });
       
-    },
-    pll(callback){
-      callback();
-    },
-    ttt(){
-      let timer;
-      timer = setInterval(()=>{
-        console.log(222);
-        if(this.model.data.song){
-          console.log('aaaa');
-          var audio = (function(){
-            var _audio = new Audio();
-            _audio.src = 'http://pc5zw9rcj.bkt.clouddn.com/%E4%B8%BD%E6%B1%9F%E5%B0%8F%E5%80%A9%20-%20%E4%B8%80%E7%9E%AC%E9%97%B4.mp3';
-            _audio.load();
-            return _audio;
-          })()
-          console.log('audio');
-          document.addEventListener('touchstart',()=>{
-            console.log('tttt')
-          });
-          document.addEventListener("WeixinJSBridgeReady", function () {
-            console.log('audio3')
-            WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
-            console.log('audio4')
-              
-              // 触发一下play事件
-              console.log(1,audio.readyState);
-              audio.play();
-              audio.oncanplay = ()=>{
-                
-                console.log(audio.readyState);
-              }
-            });
-          }, false);
-          console.log('audio2')
-          
-          
-          clearInterval(timer);
-        }
-      },100)
     }
   }
 

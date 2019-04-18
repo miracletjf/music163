@@ -31,6 +31,20 @@ a:active {
   border: none;
   background: none;
 }
+input,
+input:focus,
+input:active,
+button,
+button:focus,
+button:active,
+textarea,
+textarea:focus,
+textarea:active,
+select,
+select:focus {
+  border: none;
+  outline: none;
+}
 ul,
 ol {
   list-style: none;

@@ -1,15 +1,14 @@
 {
   let view = {
     el: '#playLists_form',
-    template: `<form action="">
+    template: `<form action="" class="upload-form">
         <div class="text-title"> 新建歌单 </div>
         <div class="row-box">
           <label>
             <span class="name">名称</span>
             <input name="name" type="text" class="ipt" value="--name--">
           </label>
-        </div>
-        <div class="row-box">
+
           <label>
             <span class="name">图片</span>
             <input name="imgUrl" type="text" class="ipt" value="--imgUrl--">
@@ -18,13 +17,18 @@
         <div class="row-box">
           <label>
             <span class="name">描述</span>
-            <textarea name="description" cols="30" rows="10">--description--</textarea>
+            <textarea class="textarea lg" name="description" cols="30" rows="10">--description--</textarea>
           </label>
         </div>
         <div class="row-box">
           <div class="btn-box"> 
-            <button>确认</button>
+            <button class="btn">确认</button>
+            
           </div>
+          <div class="btn-box"> 
+            <button class="btn" id="remove-playList">删除</button>
+          </div>
+          
         </div>
       </form> `,
     init(){
@@ -39,6 +43,11 @@
       })
 
       this.$el.html(html);
+
+      if(!data.playList.id){
+        $('#remove-playList').parent().hide();
+      }
+
     },
     reset(placeholders){
       this.render({placeholders,playList:{}})
@@ -70,6 +79,11 @@
       // 保存到云端
       return todo.save();
     },
+    remove(){
+      // 第一个参数是 className，第二个参数是 objectId
+      let todo = AV.Object.createWithoutData('PlayList', this.data.playList.id);
+      return todo.destroy();
+    },
     resetData(){
       this.data.playList = {id:'',name:'',imgUrl:'',description:''}
     }
@@ -100,6 +114,10 @@
         }
       })
 
+      this.view.$el.on('click','#remove-playList', e => {
+        e.preventDefault();
+        this.removeData();
+      })
     },
     bindEventHubs(){
       window.eventHub.on('uploadImg',url=>{
@@ -124,11 +142,18 @@
         window.eventHub.emit('saveData',playList);
         this.model.resetData();
         this.view.reset(this.model.data.placeholders);
-      })
+      }) 
     },
     modifiedData(){
       return this.model.modefied().then(()=>{
         window.eventHub.emit('modifiedData',this.model.data.playList);
+        this.model.resetData();
+        this.view.reset(this.model.data.placeholders);
+      })
+    },
+    removeData(){
+      return this.model.remove().then(()=>{
+        window.eventHub.emit('removeData',this.model.data.playList);
         this.model.resetData();
         this.view.reset(this.model.data.placeholders);
       })

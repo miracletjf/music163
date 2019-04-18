@@ -1,12 +1,16 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 
-gulp.task('less', function() {
+gulp.task('less', function(cb) {
     gulp.src('./src/css/*.less')
         .pipe(less())
-        .pipe(gulp.dest('./src/css'))
+        .pipe(gulp.dest(function(f) {
+            return f.base;
+        }));
+    cb();
 });
 
-gulp.task('default', ['less'], function() {
-    gulp.watch('./src/css/*.less', ['less']);
-})
+gulp.task('default', gulp.series('less', function(cb) {
+    gulp.watch('./src/css/*.less', gulp.series('less'));
+    cb();
+}));

@@ -1,6 +1,6 @@
 {
   let view = {
-    el: '.new-playList',
+    el: '#new-playList',
     template: `新建歌单`,
     init(){
       this.$el = $(this.el);
@@ -9,10 +9,10 @@
       this.$el.html(this.template);
     },
     active(){
-      this.$el.addClass('active');
+      this.$el.parent().addClass('active');
     },
     unActive(){
-      this.$el.removeClass('active');
+      this.$el.parent().removeClass('active');
     }
   }
 
@@ -24,6 +24,7 @@
       this.model = model;
       this.view.init();
       this.view.render();
+      this.view.active();
       this.bindEvents();
       this.bindEventHubs();
     },
@@ -38,6 +39,9 @@
         this.view.unActive();
       })
       window.eventHub.on('modifiedData',data=>{
+        this.view.active();
+      })
+      window.eventHub.on('removeData',data=>{
         this.view.active();
       })
     }

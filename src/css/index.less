@@ -19,6 +19,11 @@
     height: 1.1rem;
     fill: #aaa;
   }
+  &.icon-sousuo {
+    width: 1rem;
+    height: 1rem;
+    fill: #aaa;
+  }
 }
 
 .page.index {
@@ -116,6 +121,51 @@
         &.songs {
           margin-top: .6rem;
         }
+
+        &.hot-list {
+          padding-top: 0;
+          .list-img-wrap {
+            display: block;
+            max-height: 10rem;
+            overflow: hidden;
+            img {
+              width: 100%;
+            }
+          }
+          .list {
+            margin-top: .6rem;
+          }
+        }
+
+        &.search-wrap {
+          padding-top: 0;
+
+          .ipt-box {
+            position: relative;
+            display: block;
+            padding: .75rem .5rem;
+            border-bottom: solid 1px rgba(0,0,0,.1);
+            line-height: 1.5rem;
+
+            .ipt {
+              width: 100%;
+              line-height: 1.5rem;
+              padding-left: 1.5rem;
+              padding-right: .5rem;
+              border-radius: .75rem;
+              background: #ebecec;
+              font-size: .7rem;
+              border: none;
+            }
+            .icon {
+              position: absolute;
+              left: .8rem;
+              top: 1.1rem;
+            }
+          }
+
+        }
+        
         padding-top: 1rem;
         .sectionTitle {
           position: relative;
